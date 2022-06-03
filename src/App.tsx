@@ -14,6 +14,8 @@ import AllEmployees from './pages/ProjectManagerDashboard/AllEmployees';
 import MyEmployees from './pages/ProjectManagerDashboard/MyEmployees';
 import Projects from './pages/ProjectManagerDashboard/Projects';
 
+import Register from './pages/Register';
+
 const user = {
   role: 'admin',
 };
@@ -40,6 +42,7 @@ function App() {
             <Route path='all-projects' element={<Projects />} />
           </Route>
         )}
+        <Route path='/register' element={<Register />} />
       </Routes>
     </BrowserRouter>
   );

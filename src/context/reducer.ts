@@ -13,6 +13,12 @@ const reducer = (state: ReducerState = initialState, action: Action) => {
         ...state,
         showSidebar: !state.showSidebar,
       };
+    case ActionType.LOGIN_SUCCESS:
+      return {
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+      };
     default:
       return state;
   }
