@@ -20,17 +20,16 @@ const AddContainer = () => {
         <h4>add new employee</h4>
         <div className='form-center'>
           <FormRow type='text' name='name' value={nameInput} onChange={onChange} />
-          <FormRow
-            type='text'
-            name='surename'
-            value={surenameInput}
-            onChange={onChange}
-          />
+          <FormRow type='text' name='surname' value={surenameInput} onChange={onChange} />
           <FormRow type='email' name='email' value={emailInput} onChange={onChange} />
-        </div>
-        <div className='btn-container'>
-          <button className='btn'>submit</button>
-          <button className='btn clear-btn'>clear</button>
+          <div className='btn-container'>
+            <button className='btn btn-block submit-btn' type='submit'>
+              submit
+            </button>
+            <button className='btn btn-block clear-btn' type='submit'>
+              clear
+            </button>
+          </div>
         </div>
       </form>
     </Wrapper>
