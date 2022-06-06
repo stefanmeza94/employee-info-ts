@@ -8,12 +8,13 @@ interface LoginSuccess {
   type: ActionType.LOGIN_SUCCESS;
   payload: {
     user: {
+      id: number;
       email: string;
       lastName: string;
       name: string;
+      token: string;
+      location: string;
     };
-    token: string;
-    location: string;
   };
 }
 

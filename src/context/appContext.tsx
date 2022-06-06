@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
+import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
 
@@ -8,6 +9,7 @@ interface AppProviderProps {
 
 export const initialState = {
   showSidebar: false,
+  user: null,
 };
 
 const AppContext = createContext<any>(initialState);
@@ -15,26 +17,23 @@ const AppContext = createContext<any>(initialState);
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const authFetch = axios.create({
+    baseURL: 'http://localhost:5000',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
   const handleLogin = async (googleData: any) => {
-    const res = await fetch('/api/google-login', {
-      method: 'POST',
-      body: JSON.stringify({
-        token: googleData.tokenId,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const { data } = await authFetch.post('/api/google-login', {
+      token: googleData.tokenId,
     });
 
-    const data = await res.json();
-    console.log(data);
     dispatch({ type: ActionType.LOGIN_SUCCESS, payload: data });
-
-    localStorage.setItem('logindata', JSON.stringify(data));
+    localStorage.setItem('user', JSON.stringify(data));
   };
 
-  const handleLoginFailure = (err: any) => {
-    console.log(err);
+  const handleLoginFailure = () => {
     console.log('Handle login failed!');
   };
 

@@ -15,6 +15,8 @@ import MyEmployees from './pages/ProjectManagerDashboard/MyEmployees';
 import Projects from './pages/ProjectManagerDashboard/Projects';
 
 import Register from './pages/Register';
+import Landing from './pages/Landing';
+import ProtectedRoute from './pages/ProtectedRoute';
 
 const user = {
   role: 'admin',
@@ -25,7 +27,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         {user.role === 'admin' ? (
-          <Route path='/' element={<SharedLayout />}>
+          <Route
+            path='/'
+            element={
+              <ProtectedRoute>
+                <SharedLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Employees />} />
             <Route path='all-projects' element={<AllProjects />} />
             <Route path='cities' element={<Cities />} />
@@ -42,6 +51,7 @@ function App() {
             <Route path='all-projects' element={<Projects />} />
           </Route>
         )}
+        <Route path='/landing' element={<Landing />} />
         <Route path='/register' element={<Register />} />
       </Routes>
     </BrowserRouter>

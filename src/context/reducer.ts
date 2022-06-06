@@ -4,6 +4,7 @@ import { initialState } from './appContext';
 
 interface ReducerState {
   showSidebar: boolean;
+  user: {} | null;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action) => {
@@ -16,8 +17,7 @@ const reducer = (state: ReducerState = initialState, action: Action) => {
     case ActionType.LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload.user,
-        token: action.payload.token,
+        user: action.payload,
       };
     default:
       return state;
