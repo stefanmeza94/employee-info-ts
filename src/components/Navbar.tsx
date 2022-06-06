@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { useAppContext } from '../context/appContext';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa';
+
 import Wrapper from '../assets/Wrappers/Navbar';
 import Logo from '../assets/images/quantoxLogo.png';
 
 const Navbar = () => {
-  const { showSidebar, toggleSidebar } = useAppContext();
+  const [showLogout, setShowLogout] = useState<boolean>(false);
+  const { toggleSidebar, user, handleLogout } = useAppContext();
 
   return (
     <Wrapper>
@@ -17,11 +21,17 @@ const Navbar = () => {
           <h3 className='logo-text'>Dashboard</h3>
         </div>
         <div className='btn-container'>
-          <button type='button' className='btn'>
-            Logged User
+          <button
+            type='button'
+            className='btn'
+            onClick={() => setShowLogout(!showLogout)}
+          >
+            <FaUserCircle />
+            {user?.name}
+            <FaCaretDown />
           </button>
-          <div className='dropdown'>
-            <button type='button' className='dropdown-btn'>
+          <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
+            <button type='button' className='dropdown-btn' onClick={handleLogout}>
               Logout
             </button>
           </div>

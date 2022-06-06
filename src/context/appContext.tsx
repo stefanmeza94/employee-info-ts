@@ -3,13 +3,15 @@ import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
 
+const user = localStorage.getItem('user');
+
 interface AppProviderProps {
   children: React.ReactNode;
 }
 
 export const initialState = {
   showSidebar: false,
-  user: null,
+  user: user ? JSON.parse(user) : null,
 };
 
 const AppContext = createContext<any>(initialState);
@@ -37,13 +39,18 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     console.log('Handle login failed!');
   };
 
+  const handleLogout = () => {
+    dispatch({ type: ActionType.LOGOUT_USER });
+    localStorage.removeItem('user');
+  };
+
   const toggleSidebar = () => {
     dispatch({ type: ActionType.TOGGLE_SIDEBAR });
   };
 
   return (
     <AppContext.Provider
-      value={{ ...state, toggleSidebar, handleLogin, handleLoginFailure }}
+      value={{ ...state, toggleSidebar, handleLogin, handleLoginFailure, handleLogout }}
     >
       {children}
     </AppContext.Provider>

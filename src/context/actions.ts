@@ -18,4 +18,8 @@ interface LoginSuccess {
   };
 }
 
-export type Action = ToggleSidebar | LoginSuccess;
+interface HandleLogout {
+  type: ActionType.LOGOUT_USER;
+}
+
+export type Action = ToggleSidebar | LoginSuccess | HandleLogout;

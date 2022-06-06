@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Wrapper from '../assets/Wrappers/Register';
 import GoogleLogin from 'react-google-login';
@@ -5,8 +6,14 @@ import { useAppContext } from '../context/appContext';
 import loginImage from '../assets/images/loginImage.svg';
 
 const Register = () => {
-  const { handleLogin, handleLoginFailure } = useAppContext();
+  const { handleLogin, handleLoginFailure, user } = useAppContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user]);
 
   return (
     <Wrapper>
