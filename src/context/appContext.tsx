@@ -35,7 +35,9 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   axiosInstance.interceptors.request.use(
     (config: any) => {
-      config.headers.common['Authorization'] = `Bearer ${state.user.token}`;
+      if (state.user) {
+        config.headers.common['Authorization'] = `Bearer ${state.user.token}`;
+      }
       return config;
     },
     (error) => {
