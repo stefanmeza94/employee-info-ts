@@ -22,4 +22,12 @@ interface HandleLogout {
   type: ActionType.LOGOUT_USER;
 }
 
-export type Action = ToggleSidebar | LoginSuccess | HandleLogout;
+interface HandleChange {
+  type: ActionType.HANDLE_CHANGE;
+  payload: {
+    name: string;
+    value: string;
+  };
+}
+
+export type Action = ToggleSidebar | LoginSuccess | HandleLogout | HandleChange;

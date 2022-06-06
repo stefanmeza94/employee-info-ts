@@ -12,6 +12,9 @@ interface AppProviderProps {
 export const initialState = {
   showSidebar: false,
   user: user ? JSON.parse(user) : null,
+  name: '',
+  surname: '',
+  email: '',
 };
 
 const AppContext = createContext<any>(initialState);
@@ -19,6 +22,7 @@ const AppContext = createContext<any>(initialState);
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // axios instance
   const authFetch = axios.create({
     baseURL: 'http://localhost:5000',
     headers: {
@@ -44,13 +48,24 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     localStorage.removeItem('user');
   };
 
+  const handleChange = ({ name, value }: { name: string; value: string }) => {
+    dispatch({ type: ActionType.HANDLE_CHANGE, payload: { name, value } });
+  };
+
   const toggleSidebar = () => {
     dispatch({ type: ActionType.TOGGLE_SIDEBAR });
   };
 
   return (
     <AppContext.Provider
-      value={{ ...state, toggleSidebar, handleLogin, handleLoginFailure, handleLogout }}
+      value={{
+        ...state,
+        toggleSidebar,
+        handleLogin,
+        handleLoginFailure,
+        handleLogout,
+        handleChange,
+      }}
     >
       {children}
     </AppContext.Provider>

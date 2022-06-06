@@ -1,5 +1,12 @@
+import { useState } from 'react';
+import AddContainer from '../../components/AddContainer';
+
 const Employees = () => {
-  return <h1>Employees</h1>;
+  return (
+    <>
+      <AddContainer />
+    </>
+  );
 };
 
 export default Employees;
