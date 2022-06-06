@@ -37,6 +37,7 @@ const Wrapper = styled.nav`
     gap: 0 0.5rem;
     position: relative;
     box-shadow: var(--shadow-2);
+    font-family: inherit;
   }
 
   .dropdown {
@@ -61,6 +62,7 @@ const Wrapper = styled.nav`
     letter-spacing: var(--letterSpacing);
     text-transform: capitalize;
     cursor: pointer;
+    font-family: inherit;
   }
   .logo-text {
     display: none;

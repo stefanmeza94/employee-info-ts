@@ -15,6 +15,9 @@ export const initialState = {
   name: '',
   surname: '',
   email: '',
+  showAlert: false,
+  alertType: '',
+  alertText: '',
 };
 
 const AppContext = createContext<any>(initialState);
@@ -23,18 +26,29 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // axios instance
-  const authFetch = axios.create({
+  const axiosInstance = axios.create({
     baseURL: 'http://localhost:5000',
     headers: {
       'Content-Type': 'application/json',
     },
   });
 
+  axiosInstance.interceptors.request.use(
+    (config: any) => {
+      config.headers.common['Authorization'] = `Bearer ${state.user.token}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
   const handleLogin = async (googleData: any) => {
-    const { data } = await authFetch.post('/api/google-login', {
+    const { data } = await axiosInstance.post('/api/google-login', {
       token: googleData.tokenId,
     });
 
+    console.log(data);
     dispatch({ type: ActionType.LOGIN_SUCCESS, payload: data });
     localStorage.setItem('user', JSON.stringify(data));
   };
@@ -48,12 +62,40 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     localStorage.removeItem('user');
   };
 
+  const displayAlert = () => {
+    dispatch({ type: ActionType.DISPLAY_ALERT });
+    clearAlert();
+  };
+
+  const clearAlert = () => {
+    setTimeout(() => {
+      dispatch({ type: ActionType.CLEAR_ALERT });
+    }, 2500);
+  };
+
   const handleChange = ({ name, value }: { name: string; value: string }) => {
     dispatch({ type: ActionType.HANDLE_CHANGE, payload: { name, value } });
   };
 
   const toggleSidebar = () => {
     dispatch({ type: ActionType.TOGGLE_SIDEBAR });
+  };
+
+  const clearInputs = () => {
+    dispatch({ type: ActionType.CLEAR_INPUTS });
+  };
+
+  const addNewEmplooyee = async () => {
+    try {
+      const data = await axiosInstance.post('/api/users', {
+        name: state?.name,
+        surname: state?.surname,
+        email: state?.email,
+      });
+      console.log(data);
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -65,6 +107,9 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         handleLoginFailure,
         handleLogout,
         handleChange,
+        displayAlert,
+        clearInputs,
+        addNewEmplooyee,
       }}
     >
       {children}

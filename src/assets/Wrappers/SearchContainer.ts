@@ -36,7 +36,9 @@ const Wrapper = styled.section`
     align-self: flex-end;
     margin-top: 0.5rem;
     button {
+      font-family: inherit;
       height: 35px;
+      font-size: 1rem;
     }
   }
   .clear-btn {
@@ -50,9 +52,11 @@ const Wrapper = styled.section`
       grid-template-columns: 1fr 1fr;
       align-items: center;
       column-gap: 1.5rem;
-      row-gap: 1rem;
+      row-gap: 1.5rem;
     }
     .btn-container {
+      grid-row: 2 / 3;
+      grid-column: 1 / 4;
       margin-top: 0;
     }
   }
