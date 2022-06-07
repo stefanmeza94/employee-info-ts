@@ -38,6 +38,7 @@ const Wrapper = styled.nav`
     position: relative;
     box-shadow: var(--shadow-2);
     font-family: inherit;
+    font-size: 1rem;
   }
 
   .dropdown {
@@ -63,6 +64,7 @@ const Wrapper = styled.nav`
     text-transform: capitalize;
     cursor: pointer;
     font-family: inherit;
+    font-size: 1rem;
   }
   .logo-text {
     display: none;

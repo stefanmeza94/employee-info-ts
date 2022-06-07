@@ -3,6 +3,7 @@ import { Action } from './actions';
 import { initialState } from './appContext';
 
 interface ReducerState {
+  loading: boolean;
   showSidebar: boolean;
   user: any | null;
   name: string;
@@ -11,6 +12,7 @@ interface ReducerState {
   showAlert: boolean;
   alertText: string;
   alertType: string;
+  employees: {}[];
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -19,8 +21,8 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
       return {
         ...state,
         showAlert: true,
-        alertText: action.payload.msg,
-        alertType: action.payload.type,
+        alertText: 'Please provide all values',
+        alertType: 'danger',
       };
     case ActionType.CLEAR_ALERT:
       return {
@@ -55,6 +57,38 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
       return {
         ...state,
         [action.payload.name]: action.payload.value,
+      };
+    case ActionType.CREATE_EMPLOYEE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.CREATE_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertType: 'success',
+        alertText: 'New Employee Created!',
+      };
+    case ActionType.CREATE_EMPLOYEE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: action.payload.msg,
+      };
+    case ActionType.GET_ALL_EMPLOYEES_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.GET_ALL_EMPLOYEES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        employees: action.payload,
       };
     default:
       return state;

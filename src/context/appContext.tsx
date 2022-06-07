@@ -3,6 +3,7 @@ import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
 import { MdSignalWifiStatusbarNull } from 'react-icons/md';
+import { Action } from 'history';
 
 const user = localStorage.getItem('user');
 
@@ -11,6 +12,7 @@ interface AppProviderProps {
 }
 
 export const initialState = {
+  loading: false,
   showSidebar: false,
   user: user ? JSON.parse(user) : null,
   name: '',
@@ -19,6 +21,7 @@ export const initialState = {
   showAlert: false,
   alertType: '',
   alertText: '',
+  employees: [],
 };
 
 const AppContext = createContext<any>(initialState);
@@ -51,7 +54,6 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       token: googleData.tokenId,
     });
 
-    console.log(data);
     dispatch({ type: ActionType.LOGIN_SUCCESS, payload: data });
     localStorage.setItem('user', JSON.stringify(data));
   };
@@ -89,16 +91,31 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   };
 
   const addNewEmplooyee = async () => {
+    dispatch({ type: ActionType.CREATE_EMPLOYEE_BEGIN });
     try {
-      const data = await axiosInstance.post('/api/users', {
-        name: state?.name,
-        surname: state?.surname,
-        email: state?.email,
+      await axiosInstance.post('/api/users', {
+        name: state.name,
+        surname: state.surname,
+        email: state.email,
       });
-      console.log(data);
+      dispatch({ type: ActionType.CREATE_EMPLOYEE_SUCCESS });
+      getAllEmployees();
     } catch (error: any) {
-      console.log(error.message);
+      dispatch({
+        type: ActionType.CREATE_EMPLOYEE_ERROR,
+        payload: { msg: error.request.statusText },
+      });
     }
+    clearAlert();
+  };
+
+  const getAllEmployees = async () => {
+    dispatch({ type: ActionType.GET_ALL_EMPLOYEES_BEGIN });
+    try {
+      const { data } = await axiosInstance.get('/api/users');
+      console.log(data);
+      dispatch({ type: ActionType.GET_ALL_EMPLOYEES_SUCCESS, payload: data });
+    } catch (error) {}
   };
 
   return (
@@ -113,6 +130,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         displayAlert,
         clearInputs,
         addNewEmplooyee,
+        getAllEmployees,
       }}
     >
       {children}

@@ -43,6 +43,39 @@ interface ClearInputs {
   type: ActionType.CLEAR_INPUTS;
 }
 
+interface CreateEmployeeBegin {
+  type: ActionType.CREATE_EMPLOYEE_BEGIN;
+}
+
+interface CreateEmployeeSuccess {
+  type: ActionType.CREATE_EMPLOYEE_SUCCESS;
+}
+
+interface CreateEmployeeError {
+  type: ActionType.CREATE_EMPLOYEE_ERROR;
+  payload: { msg: string };
+}
+
+interface GetAllEmployeesBegin {
+  type: ActionType.GET_ALL_EMPLOYEES_BEGIN;
+}
+
+interface GetAllEmployeesSuccess {
+  type: ActionType.GET_ALL_EMPLOYEES_SUCCESS;
+  payload: {
+    email: string;
+    id: number;
+    name: string;
+    photo: string;
+    role: string;
+    seniority: string | null;
+  }[];
+}
+
+interface GetAllEmployeesError {
+  type: ActionType.GET_ALL_EMPLOYEES_ERROR;
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -50,4 +83,10 @@ export type Action =
   | HandleChange
   | DisplayAlert
   | ClearAlert
-  | ClearInputs;
+  | ClearInputs
+  | CreateEmployeeBegin
+  | CreateEmployeeSuccess
+  | CreateEmployeeError
+  | GetAllEmployeesBegin
+  | GetAllEmployeesSuccess
+  | GetAllEmployeesError;
