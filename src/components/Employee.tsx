@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Wrapper from '../assets/Wrappers/Employee';
+import { useAppContext } from '../context/appContext';
 
 interface EmployeeProps {
   id: number;
@@ -18,6 +19,7 @@ const Employee: React.FC<EmployeeProps> = ({
   role,
   seniority,
 }) => {
+  const { deleteEmployee } = useAppContext();
   return (
     <Wrapper>
       <header>
@@ -28,10 +30,7 @@ const Employee: React.FC<EmployeeProps> = ({
         </div>
       </header>
       <div className='content'>
-        <div className='content-center'>
-          {email}
-          {seniority && 'Junior'}
-        </div>
+        <div className='content-center'>{email}</div>
         <footer>
           <div className='actions'>
             <Link to='/add-job' className='btn edit-btn'>
@@ -40,7 +39,7 @@ const Employee: React.FC<EmployeeProps> = ({
             <button
               type='button'
               className='btn delete-btn'
-              // onClick={() => deleteJob(_id)}
+              onClick={() => deleteEmployee(id)}
             >
               Delete
             </button>

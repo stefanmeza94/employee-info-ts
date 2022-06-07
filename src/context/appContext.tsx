@@ -118,6 +118,20 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     } catch (error) {}
   };
 
+  const deleteEmployee = async (id: number) => {
+    dispatch({ type: ActionType.DELETE_EMPLOYEE_BEGIN });
+    try {
+      await axiosInstance.delete(`/api/users/${id}`);
+      dispatch({ type: ActionType.DELETE_EMPLOYEE_SUCCESS });
+      getAllEmployees();
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.DELETE_EMPLOYEE_ERROR,
+        payload: { msg: error.request.statusText },
+      });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -131,6 +145,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         clearInputs,
         addNewEmplooyee,
         getAllEmployees,
+        deleteEmployee,
       }}
     >
       {children}

@@ -1,3 +1,4 @@
+import { GrAttraction } from 'react-icons/gr';
 import { ActionType } from './action-type';
 import { Action } from './actions';
 import { initialState } from './appContext';
@@ -89,6 +90,27 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         ...state,
         loading: false,
         employees: action.payload,
+      };
+    case ActionType.DELETE_EMPLOYEE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.DELETE_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Employee delete successfully',
+        alertType: 'success',
+      };
+    case ActionType.DELETE_EMPLOYEE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
       };
     default:
       return state;

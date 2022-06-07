@@ -76,6 +76,19 @@ interface GetAllEmployeesError {
   type: ActionType.GET_ALL_EMPLOYEES_ERROR;
 }
 
+interface DeleteEmployeeBegin {
+  type: ActionType.DELETE_EMPLOYEE_BEGIN;
+}
+
+interface DeleteEmployeeSucces {
+  type: ActionType.DELETE_EMPLOYEE_SUCCESS;
+}
+
+interface DeleteEmployeeError {
+  type: ActionType.DELETE_EMPLOYEE_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -89,4 +102,7 @@ export type Action =
   | CreateEmployeeError
   | GetAllEmployeesBegin
   | GetAllEmployeesSuccess
-  | GetAllEmployeesError;
+  | GetAllEmployeesError
+  | DeleteEmployeeBegin
+  | DeleteEmployeeSucces
+  | DeleteEmployeeError;
