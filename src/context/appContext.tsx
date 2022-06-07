@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer } from 'react';
 import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
+import { MdSignalWifiStatusbarNull } from 'react-icons/md';
 
 const user = localStorage.getItem('user');
 
@@ -64,8 +65,8 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     localStorage.removeItem('user');
   };
 
-  const displayAlert = () => {
-    dispatch({ type: ActionType.DISPLAY_ALERT });
+  const displayAlert = (msg: string, type: string) => {
+    dispatch({ type: ActionType.DISPLAY_ALERT, payload: { msg, type } });
     clearAlert();
   };
 

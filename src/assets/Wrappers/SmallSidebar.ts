@@ -19,6 +19,9 @@ const Wrapper = styled.aside`
     z-index: 99;
     opacity: 1;
   }
+  .logo {
+    max-width: 100px;
+  }
   .content {
     background: var(--white);
     width: var(--fluid-width);
@@ -33,7 +36,7 @@ const Wrapper = styled.aside`
   .close-btn {
     position: absolute;
     top: 10px;
-    left: 10px;
+    right: 10px;
     background: transparent;
     border-color: transparent;
     font-size: 2rem;
@@ -47,6 +50,7 @@ const Wrapper = styled.aside`
   }
   .nav-link {
     display: flex;
+    justify-content: center;
     align-items: center;
     color: var(--grey-500);
     padding: 1rem 0;

@@ -19,8 +19,8 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
       return {
         ...state,
         showAlert: true,
-        alertText: 'Please provide all values',
-        alertType: 'danger',
+        alertText: action.payload.msg,
+        alertType: action.payload.type,
       };
     case ActionType.CLEAR_ALERT:
       return {

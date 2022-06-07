@@ -32,6 +32,7 @@ interface HandleChange {
 
 interface DisplayAlert {
   type: ActionType.DISPLAY_ALERT;
+  payload: { msg: string; type: string };
 }
 
 interface ClearAlert {

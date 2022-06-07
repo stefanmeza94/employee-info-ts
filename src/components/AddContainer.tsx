@@ -28,7 +28,7 @@ const AddContainer = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (!name || !surname || !email) {
-      displayAlert();
+      displayAlert('Please provide all values', 'danger');
       return;
     }
 
@@ -38,6 +38,12 @@ const AddContainer = () => {
 
   const handleClear = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (name || surname || email) {
+      displayAlert('All values cleared', 'success');
+      clearInputs();
+      return;
+    }
+    displayAlert('Please provide all values', 'danger');
     clearInputs();
   };
 
