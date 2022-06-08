@@ -1,5 +1,6 @@
+import AddCities from '../../components/AddCities';
 const Cities = () => {
-  return <h1>Cities</h1>;
+  return <AddCities />;
 };
 
 export default Cities;

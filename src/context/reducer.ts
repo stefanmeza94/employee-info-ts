@@ -1,4 +1,6 @@
 import { GrAttraction } from 'react-icons/gr';
+import { StylisPlugin } from 'styled-components';
+import { UnaryExpression } from 'typescript';
 import { ActionType } from './action-type';
 import { Action } from './actions';
 import { initialState } from './appContext';
@@ -7,14 +9,28 @@ interface ReducerState {
   loading: boolean;
   showSidebar: boolean;
   user: any | null;
-  name: string;
+  name: string | undefined;
   surname: string;
   email: string;
   showAlert: boolean;
   alertText: string;
   alertType: string;
-  employees: {}[];
+  employees: {
+    country?: string;
+    city?: string;
+    id: number;
+    name: string | undefined;
+    photo: string;
+    role: string | null;
+    seniority: string | null;
+    email: string;
+  }[];
   isEditing: boolean;
+  employeeEditId: number | null | undefined;
+  seniority: string | null;
+  country: string;
+  city: string;
+  role: string | null;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -108,7 +124,7 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         ...state,
         loading: false,
         showAlert: true,
-        alertText: 'Employee delete successfully',
+        alertText: 'Employee deleted successfully',
         alertType: 'success',
       };
     case ActionType.DELETE_EMPLOYEE_ERROR:
@@ -119,18 +135,24 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertText: action.payload.msg,
         alertType: 'danger',
       };
-    case ActionType.CANNOT_DELETE_YOURSELF:
-      return {
-        ...state,
-        loading: false,
-        showAlert: true,
-        alertText: 'Cannot delete yourself',
-        alertType: 'danger',
-      };
-    case ActionType.TOGGLE_EDIT:
+    case ActionType.SET_EDIT_EMPLOYEE:
+      const employee = state.employees.find(
+        (employee) => employee.id === action.payload.id
+      );
       return {
         ...state,
         isEditing: true,
+        employeeEditId: employee?.id,
+        name: employee?.name,
+        seniority: employee?.seniority || 'intern',
+        country: employee?.country || 'Serbia',
+        city: employee?.city || 'Serbia',
+        role: employee?.role || 'Employee',
+      };
+    case ActionType.CLEAR_EDIT:
+      return {
+        ...state,
+        isEditing: false,
       };
     default:
       return state;

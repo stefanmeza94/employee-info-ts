@@ -19,7 +19,8 @@ const Employee: React.FC<EmployeeProps> = ({
   role,
   seniority,
 }) => {
-  const { deleteEmployee, toggleEdit } = useAppContext();
+  const { deleteEmployee, setEditEmployee } = useAppContext();
+
   return (
     <Wrapper>
       <header>
@@ -33,7 +34,7 @@ const Employee: React.FC<EmployeeProps> = ({
         <div className='content-center'>{email}</div>
         <footer>
           <div className='actions'>
-            <button className='btn edit-btn' onClick={toggleEdit}>
+            <button className='btn edit-btn' onClick={() => setEditEmployee(id)}>
               Edit
             </button>
             <button

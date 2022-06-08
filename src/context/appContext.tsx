@@ -21,13 +21,14 @@ export const initialState = {
   alertText: '',
   employees: [],
   isEditing: false,
+  employeeEditId: null,
   seniorityListOptions: ['intern', 'junior', 'medior', 'senior'],
   seniority: '',
   cityListOptions: ['Nis', 'Beograd', 'Novi Sad', 'Cacak', 'Prokuplje'],
   city: '',
   countryListOptions: ['Srbija', 'Crna Gora', 'Ukrajina', 'Makedonija', 'Nemacka'],
   country: '',
-  roleListOptions: ['System Administrator', 'Project Manager'],
+  roleListOptions: ['system_admin ', 'project_manager', 'employee'],
   role: '',
 };
 
@@ -120,8 +121,10 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: ActionType.GET_ALL_EMPLOYEES_BEGIN });
     try {
       const { data } = await axiosInstance.get('/api/users');
-      console.log(data);
-      dispatch({ type: ActionType.GET_ALL_EMPLOYEES_SUCCESS, payload: data });
+      const employee = data.filter((e: any) => {
+        return e.role === null;
+      });
+      dispatch({ type: ActionType.GET_ALL_EMPLOYEES_SUCCESS, payload: employee });
     } catch (error: any) {
       dispatch({
         type: ActionType.GET_ALL_EMPLOYEES_ERROR,
@@ -133,11 +136,6 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const deleteEmployee = async (id: number) => {
     dispatch({ type: ActionType.DELETE_EMPLOYEE_BEGIN });
     try {
-      if (state.user.id === id) {
-        dispatch({ type: ActionType.CANNOT_DELETE_YOURSELF });
-        clearAlert();
-        return;
-      }
       await axiosInstance.delete(`/api/users/${id}`);
       dispatch({ type: ActionType.DELETE_EMPLOYEE_SUCCESS });
       getAllEmployees();
@@ -150,8 +148,28 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     clearAlert();
   };
 
-  const toggleEdit = () => {
-    dispatch({ type: ActionType.TOGGLE_EDIT });
+  const setEditEmployee = (id: number) => {
+    dispatch({ type: ActionType.SET_EDIT_EMPLOYEE, payload: { id } });
+  };
+
+  const editEmployee = async (id: number) => {
+    try {
+      const data = await axiosInstance.put(`/api/users/${state.employeeEditId}`, {
+        name: state.name,
+        surname: state.surname,
+        city: state.city,
+        seniority: state.seniority,
+        role: state.role,
+        email: state.email,
+      });
+      console.log(data);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  const clearEdit = () => {
+    dispatch({ type: ActionType.CLEAR_EDIT });
   };
 
   return (
@@ -168,7 +186,9 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         addNewEmplooyee,
         getAllEmployees,
         deleteEmployee,
-        toggleEdit,
+        setEditEmployee,
+        editEmployee,
+        clearEdit,
       }}
     >
       {children}

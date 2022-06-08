@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { useAppContext } from './context/appContext';
 
 import SharedLayout from './pages/SharedLayout';
 import Employees from './pages/AdminDashboard/Employees';
@@ -18,15 +19,13 @@ import Register from './pages/Register';
 import Landing from './pages/Landing';
 import ProtectedRoute from './pages/ProtectedRoute';
 
-const user = {
-  role: 'admin',
-};
+const role = 'system_admin';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {user.role === 'admin' ? (
+        {role === 'system_admin' ? (
           <Route
             path='/'
             element={

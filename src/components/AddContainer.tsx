@@ -24,6 +24,8 @@ const AddContainer = () => {
     country,
     roleListOptions,
     role,
+    editEmployee,
+    clearEdit,
   } = useAppContext();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +39,10 @@ const AddContainer = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (isEditing) {
+      editEmployee();
+      return;
+    }
     if (!name || !surname || !email) {
       displayAlert();
       return;
@@ -48,6 +54,9 @@ const AddContainer = () => {
 
   const handleClear = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (isEditing) {
+      clearEdit();
+    }
     if (name || surname || email) {
       clearInputs();
       return;
@@ -108,7 +117,7 @@ const AddContainer = () => {
               {isEditing ? 'edit' : 'submit'}
             </button>
             <button className='btn btn-block clear-btn' onClick={handleClear}>
-              clear
+              {isEditing ? 'Go Back' : 'Edit'}
             </button>
           </div>
         </div>

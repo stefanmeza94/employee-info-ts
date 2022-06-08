@@ -94,8 +94,13 @@ interface CannotDeleteYourself {
   type: ActionType.CANNOT_DELETE_YOURSELF;
 }
 
-interface ToggleEdit {
-  type: ActionType.TOGGLE_EDIT;
+interface SetEditEmployee {
+  type: ActionType.SET_EDIT_EMPLOYEE;
+  payload: { id: number };
+}
+
+interface ClearEdit {
+  type: ActionType.CLEAR_EDIT;
 }
 
 export type Action =
@@ -116,4 +121,5 @@ export type Action =
   | DeleteEmployeeSucces
   | DeleteEmployeeError
   | CannotDeleteYourself
-  | ToggleEdit;
+  | SetEditEmployee
+  | ClearEdit;
