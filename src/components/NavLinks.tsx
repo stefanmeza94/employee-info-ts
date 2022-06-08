@@ -6,6 +6,7 @@ import { GiModernCity } from 'react-icons/gi';
 import { MdCategory, MdOutlinePeopleOutline, MdEmojiPeople } from 'react-icons/md';
 import { BiCode } from 'react-icons/bi';
 import { IoMdPeople } from 'react-icons/io';
+import { useAppContext } from '../context/appContext';
 
 interface NavLinksProps {
   toggleSidebar?: any;
@@ -66,27 +67,37 @@ const projectManagerLinks = [
   {
     id: 1,
     text: 'all employees',
-    path: '/',
+    path: '/project-manager',
     icon: <IoMdPeople />,
   },
   {
     id: 2,
     text: 'my employee',
-    path: '/my-employees',
+    path: '/project-manager/my-employees',
     icon: <MdEmojiPeople />,
   },
   {
     id: 3,
     text: 'all projects',
-    path: '/all-projects',
+    path: '/project-manager/all-projects',
     icon: <AiOutlineFundProjectionScreen />,
   },
 ];
 
+let currentUser;
+
 const NavLinks: React.FC<NavLinksProps> = ({ toggleSidebar }) => {
+  const { user } = useAppContext();
+
+  if (user.role === 'SYSTEM_ADMIN') {
+    currentUser = adminLinks;
+  } else {
+    currentUser = projectManagerLinks;
+  }
+
   return (
     <div className='nav-links'>
-      {adminLinks?.map((link) => {
+      {currentUser?.map((link) => {
         const { text, id, path, icon } = link;
         return (
           <NavLink

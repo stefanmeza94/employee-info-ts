@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useAppContext } from './context/appContext';
 
 import SharedLayout from './pages/SharedLayout';
@@ -19,41 +19,42 @@ import Register from './pages/Register';
 import Landing from './pages/Landing';
 import ProtectedRoute from './pages/ProtectedRoute';
 
-const role = 'system_admin';
-
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {role === 'system_admin' ? (
-          <Route
-            path='/'
-            element={
-              <ProtectedRoute>
-                <SharedLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Employees />} />
-            <Route path='all-projects' element={<AllProjects />} />
-            <Route path='cities' element={<Cities />} />
-            <Route path='countries' element={<Countries />} />
-            <Route path='seniorities' element={<Seniorities />} />
-            <Route path='positions' element={<Positions />} />
-            <Route path='project-managers' element={<ProjectManagers />} />
-            <Route path='system-administrators' element={<SystemAdministrators />} />
-          </Route>
-        ) : (
-          <Route path='/' element={<SharedLayout />}>
-            <Route index element={<AllEmployees />} />
-            <Route path='my-employees' element={<MyEmployees />} />
-            <Route path='all-projects' element={<Projects />} />
-          </Route>
-        )}
-        <Route path='/landing' element={<Landing />} />
-        <Route path='/register' element={<Register />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Landing />} />
+      <Route path='/register' element={<Register />} />
+      <Route
+        path='/admin'
+        element={
+          <ProtectedRoute>
+            <SharedLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Employees />} />
+        <Route path='all-projects' element={<AllProjects />} />
+        <Route path='cities' element={<Cities />} />
+        <Route path='countries' element={<Countries />} />
+        <Route path='seniorities' element={<Seniorities />} />
+        <Route path='positions' element={<Positions />} />
+        <Route path='project-managers' element={<ProjectManagers />} />
+        <Route path='system-administrators' element={<SystemAdministrators />} />
+      </Route>
+
+      <Route
+        path='/project-manager'
+        element={
+          <ProtectedRoute>
+            <SharedLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<AllEmployees />} />
+        <Route path='my-employees' element={<MyEmployees />} />
+        <Route path='all-projects' element={<Projects />} />
+      </Route>
+    </Routes>
   );
 }
 

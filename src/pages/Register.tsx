@@ -11,7 +11,7 @@ const Register = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/');
+      navigate(user.role === 'SYSTEM_ADMIN' ? '/admin' : '/project-manager');
     }
   }, [user]);
 
@@ -29,7 +29,7 @@ const Register = () => {
           cookiePolicy={'single_host_origin'}
         />
         <div className='btnWrapper'>
-          <button onClick={() => navigate(-1)} className='backBtn'>
+          <button onClick={() => navigate('/')} className='backBtn'>
             Go back!
           </button>
         </div>
