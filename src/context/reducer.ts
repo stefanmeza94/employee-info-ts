@@ -14,6 +14,7 @@ interface ReducerState {
   alertText: string;
   alertType: string;
   employees: {}[];
+  isEditing: boolean;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -91,6 +92,12 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         loading: false,
         employees: action.payload,
       };
+    case ActionType.GET_ALL_EMPLOYEES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        alertText: action.payload.msg,
+      };
     case ActionType.DELETE_EMPLOYEE_BEGIN:
       return {
         ...state,
@@ -111,6 +118,19 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         showAlert: true,
         alertText: action.payload.msg,
         alertType: 'danger',
+      };
+    case ActionType.CANNOT_DELETE_YOURSELF:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Cannot delete yourself',
+        alertType: 'danger',
+      };
+    case ActionType.TOGGLE_EDIT:
+      return {
+        ...state,
+        isEditing: true,
       };
     default:
       return state;

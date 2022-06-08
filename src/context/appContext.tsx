@@ -2,8 +2,6 @@ import { createContext, useContext, useReducer } from 'react';
 import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
-import { MdSignalWifiStatusbarNull } from 'react-icons/md';
-import { Action } from 'history';
 
 const user = localStorage.getItem('user');
 
@@ -22,6 +20,15 @@ export const initialState = {
   alertType: '',
   alertText: '',
   employees: [],
+  isEditing: false,
+  seniorityListOptions: ['intern', 'junior', 'medior', 'senior'],
+  seniority: '',
+  cityListOptions: ['Nis', 'Beograd', 'Novi Sad', 'Cacak', 'Prokuplje'],
+  city: '',
+  countryListOptions: ['Srbija', 'Crna Gora', 'Ukrajina', 'Makedonija', 'Nemacka'],
+  country: '',
+  roleListOptions: ['System Administrator', 'Project Manager'],
+  role: '',
 };
 
 const AppContext = createContext<any>(initialState);
@@ -115,12 +122,22 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       const { data } = await axiosInstance.get('/api/users');
       console.log(data);
       dispatch({ type: ActionType.GET_ALL_EMPLOYEES_SUCCESS, payload: data });
-    } catch (error) {}
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.GET_ALL_EMPLOYEES_ERROR,
+        payload: { msg: error.message },
+      });
+    }
   };
 
   const deleteEmployee = async (id: number) => {
     dispatch({ type: ActionType.DELETE_EMPLOYEE_BEGIN });
     try {
+      if (state.user.id === id) {
+        dispatch({ type: ActionType.CANNOT_DELETE_YOURSELF });
+        clearAlert();
+        return;
+      }
       await axiosInstance.delete(`/api/users/${id}`);
       dispatch({ type: ActionType.DELETE_EMPLOYEE_SUCCESS });
       getAllEmployees();
@@ -130,6 +147,11 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         payload: { msg: error.request.statusText },
       });
     }
+    clearAlert();
+  };
+
+  const toggleEdit = () => {
+    dispatch({ type: ActionType.TOGGLE_EDIT });
   };
 
   return (
@@ -146,6 +168,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         addNewEmplooyee,
         getAllEmployees,
         deleteEmployee,
+        toggleEdit,
       }}
     >
       {children}

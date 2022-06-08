@@ -74,6 +74,7 @@ interface GetAllEmployeesSuccess {
 
 interface GetAllEmployeesError {
   type: ActionType.GET_ALL_EMPLOYEES_ERROR;
+  payload: { msg: string };
 }
 
 interface DeleteEmployeeBegin {
@@ -87,6 +88,14 @@ interface DeleteEmployeeSucces {
 interface DeleteEmployeeError {
   type: ActionType.DELETE_EMPLOYEE_ERROR;
   payload: { msg: string };
+}
+
+interface CannotDeleteYourself {
+  type: ActionType.CANNOT_DELETE_YOURSELF;
+}
+
+interface ToggleEdit {
+  type: ActionType.TOGGLE_EDIT;
 }
 
 export type Action =
@@ -105,4 +114,6 @@ export type Action =
   | GetAllEmployeesError
   | DeleteEmployeeBegin
   | DeleteEmployeeSucces
-  | DeleteEmployeeError;
+  | DeleteEmployeeError
+  | CannotDeleteYourself
+  | ToggleEdit;

@@ -55,8 +55,8 @@ const Wrapper = styled.section`
       row-gap: 1.5rem;
     }
     .btn-container {
-      grid-row: 2 / 3;
-      grid-column: 1 / 4;
+      grid-row: span 3;
+      grid-column: span 3;
       margin-top: 0;
     }
   }
