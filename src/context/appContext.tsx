@@ -23,13 +23,13 @@ export const initialState = {
   isEditing: false,
   employeeEditId: null,
   seniorityListOptions: ['intern', 'junior', 'medior', 'senior'],
-  seniority: '',
+  seniority: 'intern',
   cityListOptions: ['Nis', 'Beograd', 'Novi Sad', 'Cacak', 'Prokuplje'],
   city: '',
   countryListOptions: ['Srbija', 'Crna Gora', 'Ukrajina', 'Makedonija', 'Nemacka'],
   country: '',
-  roleListOptions: ['employee', 'project_manager', 'system_admin '],
-  role: '',
+  roleListOptions: ['employee', 'project_manager', 'system_admin'],
+  role: 'employee',
 };
 
 const AppContext = createContext<any>(initialState);
@@ -105,6 +105,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       await axiosInstance.post('/api/users', {
         name: state.name,
         email: state.email,
+        seniority: state.seniority,
         role: state.role,
       });
       dispatch({ type: ActionType.CREATE_EMPLOYEE_SUCCESS });
@@ -160,7 +161,6 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const editEmployee = async () => {
     dispatch({ type: ActionType.EDIT_EMPLOYEE_BEGIN });
     try {
-      console.log(state.name, state.email, state.seniority, state.role);
       await axiosInstance.put(`/api/users/${state.employeeEditId}`, {
         name: state.name,
         email: state.email,
@@ -169,12 +169,11 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       });
       dispatch({ type: ActionType.EDIT_EMPLOYEE_SUCCESS });
       clearEdit();
-      clearInputs();
       getAllEmployees();
     } catch (error: any) {
       dispatch({ type: ActionType.EDIT_EMPLOYEE_ERROR });
     }
-    clearInputs();
+    clearAlert();
   };
 
   const clearEdit = () => {
