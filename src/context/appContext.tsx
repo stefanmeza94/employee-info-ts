@@ -158,6 +158,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   };
 
   const editEmployee = async () => {
+    dispatch({ type: ActionType.EDIT_EMPLOYEE_BEGIN });
     try {
       console.log(state.name, state.email, state.seniority, state.role);
       await axiosInstance.put(`/api/users/${state.employeeEditId}`, {
@@ -166,10 +167,12 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         seniority: state.seniority,
         role: state.role,
       });
+      dispatch({ type: ActionType.EDIT_EMPLOYEE_SUCCESS });
       clearEdit();
+      clearInputs();
       getAllEmployees();
     } catch (error: any) {
-      console.log(error.message);
+      dispatch({ type: ActionType.EDIT_EMPLOYEE_ERROR });
     }
     clearInputs();
   };

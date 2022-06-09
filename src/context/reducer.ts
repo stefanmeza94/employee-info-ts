@@ -166,6 +166,19 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         role: 'employee',
         seniority: 'intern',
       };
+    case ActionType.EDIT_EMPLOYEE_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.EDIT_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertType: 'success',
+        alertText: 'Employee updated successfully',
+      };
     default:
       return state;
   }

@@ -99,6 +99,18 @@ interface SetEditEmployee {
   payload: { id: number };
 }
 
+interface EditEmployeeBegin {
+  type: ActionType.EDIT_EMPLOYEE_BEGIN;
+}
+
+interface EditEmployeeSuccess {
+  type: ActionType.EDIT_EMPLOYEE_SUCCESS;
+}
+
+interface EditEmployeeError {
+  type: ActionType.EDIT_EMPLOYEE_ERROR;
+}
+
 interface ClearEdit {
   type: ActionType.CLEAR_EDIT;
 }
@@ -122,4 +134,7 @@ export type Action =
   | DeleteEmployeeError
   | CannotDeleteYourself
   | SetEditEmployee
-  | ClearEdit;
+  | ClearEdit
+  | EditEmployeeBegin
+  | EditEmployeeSuccess
+  | EditEmployeeError;
