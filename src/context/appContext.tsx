@@ -15,7 +15,6 @@ export const initialState = {
   showSidebar: false,
   user: user ? JSON.parse(user) : null,
   name: '',
-  surname: '',
   email: '',
   showAlert: false,
   alertType: '',
@@ -29,7 +28,7 @@ export const initialState = {
   city: '',
   countryListOptions: ['Srbija', 'Crna Gora', 'Ukrajina', 'Makedonija', 'Nemacka'],
   country: '',
-  roleListOptions: ['system_admin ', 'project_manager', 'employee'],
+  roleListOptions: ['employee', 'project_manager', 'system_admin '],
   role: '',
 };
 
@@ -105,10 +104,11 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     try {
       await axiosInstance.post('/api/users', {
         name: state.name,
-        surname: state.surname,
         email: state.email,
+        role: state.role,
       });
       dispatch({ type: ActionType.CREATE_EMPLOYEE_SUCCESS });
+      clearInputs();
       getAllEmployees();
     } catch (error: any) {
       dispatch({
@@ -123,10 +123,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: ActionType.GET_ALL_EMPLOYEES_BEGIN });
     try {
       const { data } = await axiosInstance.get('/api/users');
-      const employee = data.filter((e: any) => {
-        return e.role === null;
-      });
-      dispatch({ type: ActionType.GET_ALL_EMPLOYEES_SUCCESS, payload: employee });
+      dispatch({ type: ActionType.GET_ALL_EMPLOYEES_SUCCESS, payload: data });
     } catch (error: any) {
       dispatch({
         type: ActionType.GET_ALL_EMPLOYEES_ERROR,
@@ -138,8 +135,14 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const deleteEmployee = async (id: number) => {
     dispatch({ type: ActionType.DELETE_EMPLOYEE_BEGIN });
     try {
+      if (state.user.id === id) {
+        dispatch({ type: ActionType.CANNOT_DELETE_YOURSELF });
+        clearAlert();
+        return;
+      }
       await axiosInstance.delete(`/api/users/${id}`);
       dispatch({ type: ActionType.DELETE_EMPLOYEE_SUCCESS });
+      clearAlert();
       getAllEmployees();
     } catch (error: any) {
       dispatch({
@@ -154,20 +157,21 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: ActionType.SET_EDIT_EMPLOYEE, payload: { id } });
   };
 
-  const editEmployee = async (id: number) => {
+  const editEmployee = async () => {
     try {
-      const data = await axiosInstance.put(`/api/users/${state.employeeEditId}`, {
+      console.log(state.name, state.email, state.seniority, state.role);
+      await axiosInstance.put(`/api/users/${state.employeeEditId}`, {
         name: state.name,
-        surname: state.surname,
-        city: state.city,
+        email: state.email,
         seniority: state.seniority,
         role: state.role,
-        email: state.email,
       });
-      console.log(data);
+      clearEdit();
+      getAllEmployees();
     } catch (error: any) {
       console.log(error.message);
     }
+    clearInputs();
   };
 
   const clearEdit = () => {

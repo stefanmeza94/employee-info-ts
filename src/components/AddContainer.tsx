@@ -8,7 +8,6 @@ import Wrapper from '../assets/Wrappers/SearchContainer';
 const AddContainer = () => {
   const {
     name,
-    surname,
     email,
     handleChange,
     displayAlert,
@@ -20,8 +19,6 @@ const AddContainer = () => {
     seniority,
     cityListOptions,
     city,
-    countryListOptions,
-    country,
     roleListOptions,
     role,
     editEmployee,
@@ -43,7 +40,7 @@ const AddContainer = () => {
       editEmployee();
       return;
     }
-    if (!name || !surname || !email) {
+    if (!name || !email) {
       displayAlert();
       return;
     }
@@ -57,7 +54,7 @@ const AddContainer = () => {
     if (isEditing) {
       clearEdit();
     }
-    if (name || surname || email) {
+    if (name || email) {
       clearInputs();
       return;
     }
@@ -72,42 +69,19 @@ const AddContainer = () => {
         {showAlert && <Alert />}
         <div className='form-center'>
           <FormRow type='text' name='name' value={name} onChange={onChange} />
-          <FormRow type='text' name='surname' value={surname} onChange={onChange} />
-          {isEditing ? null : (
-            <FormRow type='email' name='email' value={email} onChange={onChange} />
-          )}
-          {isEditing ? (
-            <FormRowSelect
-              list={seniorityListOptions}
-              name='seniority'
-              value={seniority}
-              onChange={onChange}
-            />
-          ) : null}
-          {isEditing ? (
-            <FormRowSelect
-              list={cityListOptions}
-              name='city'
-              value={city}
-              onChange={onChange}
-            />
-          ) : null}
-          {isEditing ? (
-            <FormRowSelect
-              list={countryListOptions}
-              name='country'
-              value={country}
-              onChange={onChange}
-            />
-          ) : null}
-          {isEditing ? (
-            <FormRowSelect
-              list={roleListOptions}
-              name='role'
-              value={role}
-              onChange={onChange}
-            />
-          ) : null}
+          <FormRow type='email' name='email' value={email} onChange={onChange} />
+          <FormRowSelect
+            list={seniorityListOptions}
+            name='seniority'
+            value={seniority}
+            onChange={onChange}
+          />
+          <FormRowSelect
+            list={roleListOptions}
+            name='role'
+            value={role}
+            onChange={onChange}
+          />
           <div className='btn-container'>
             <button
               className='btn btn-block submit-btn'
@@ -117,7 +91,7 @@ const AddContainer = () => {
               {isEditing ? 'edit' : 'submit'}
             </button>
             <button className='btn btn-block clear-btn' onClick={handleClear}>
-              {isEditing ? 'Go Back' : 'Edit'}
+              {isEditing ? 'Go Back' : 'Clear'}
             </button>
           </div>
         </div>

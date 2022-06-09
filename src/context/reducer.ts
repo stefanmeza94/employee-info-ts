@@ -9,9 +9,8 @@ interface ReducerState {
   loading: boolean;
   showSidebar: boolean;
   user: any | null;
-  name: string | undefined;
-  surname: string;
-  email: string;
+  name: string | null;
+  email: string | null;
   showAlert: boolean;
   alertText: string;
   alertType: string;
@@ -28,8 +27,8 @@ interface ReducerState {
   isEditing: boolean;
   employeeEditId: number | null | undefined;
   seniority: string | null;
-  country: string;
-  city: string;
+  country: string | null;
+  city: string | null;
   role: string | null;
 }
 
@@ -53,8 +52,9 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
       return {
         ...state,
         name: '',
-        surname: '',
         email: '',
+        seniority: 'intern',
+        role: 'employee',
       };
     case ActionType.TOGGLE_SIDEBAR:
       return {
@@ -135,24 +135,36 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertText: action.payload.msg,
         alertType: 'danger',
       };
+    case ActionType.CANNOT_DELETE_YOURSELF:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Cannot delete yourself!',
+        alertType: 'danger',
+      };
     case ActionType.SET_EDIT_EMPLOYEE:
-      const employee = state.employees.find(
+      const curEmployeeEdit = state.employees.find(
         (employee) => employee.id === action.payload.id
       );
+      console.log(curEmployeeEdit);
       return {
         ...state,
         isEditing: true,
-        employeeEditId: employee?.id,
-        name: employee?.name,
-        seniority: employee?.seniority || 'intern',
-        country: employee?.country || 'Serbia',
-        city: employee?.city || 'Serbia',
-        role: employee?.role || 'Employee',
+        employeeEditId: curEmployeeEdit?.id,
+        name: curEmployeeEdit?.name || '',
+        email: curEmployeeEdit?.email || '',
+        seniority: curEmployeeEdit?.seniority?.toLowerCase() || '',
+        role: curEmployeeEdit?.role?.toLowerCase() || '',
       };
     case ActionType.CLEAR_EDIT:
       return {
         ...state,
         isEditing: false,
+        name: '',
+        email: '',
+        role: 'employee',
+        seniority: 'intern',
       };
     default:
       return state;

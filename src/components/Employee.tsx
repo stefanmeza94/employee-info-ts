@@ -5,20 +5,10 @@ import { useAppContext } from '../context/appContext';
 interface EmployeeProps {
   id: number;
   email: string;
-  photo: string;
   name: string;
-  role: string;
-  seniority: string | null;
 }
 
-const Employee: React.FC<EmployeeProps> = ({
-  id,
-  email,
-  photo,
-  name,
-  role,
-  seniority,
-}) => {
+const Employee: React.FC<EmployeeProps> = ({ id, email, name }) => {
   const { deleteEmployee, setEditEmployee } = useAppContext();
 
   return (
