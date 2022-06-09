@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps): any => {
   const { user } = useAppContext();
 
   if (!user) {
-    return <Navigate to='/register' />;
+    return <Navigate to='/landing' />;
   }
 
   return children;

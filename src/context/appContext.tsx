@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer } from 'react';
 import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
+import { useNavigate } from 'react-router-dom';
 
 const user = localStorage.getItem('user');
 
@@ -36,6 +37,7 @@ const AppContext = createContext<any>(initialState);
 
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
 
   // axios instance
   const axiosInstance = axios.create({
