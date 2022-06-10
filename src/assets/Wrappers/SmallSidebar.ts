@@ -50,7 +50,6 @@ const Wrapper = styled.aside`
   }
   .nav-link {
     display: flex;
-    justify-content: center;
     align-items: center;
     color: var(--grey-500);
     padding: 1rem 0;

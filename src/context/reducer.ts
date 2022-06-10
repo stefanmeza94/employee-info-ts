@@ -147,7 +147,6 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
       const curEmployeeEdit = state.employees.find(
         (employee) => employee.id === action.payload.id
       );
-      console.log(curEmployeeEdit);
       return {
         ...state,
         isEditing: true,

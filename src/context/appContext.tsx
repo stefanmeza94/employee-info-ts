@@ -3,6 +3,7 @@ import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
 import { useNavigate } from 'react-router-dom';
+import { BsWindowSidebar } from 'react-icons/bs';
 
 const user = localStorage.getItem('user');
 
@@ -135,12 +136,12 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const deleteEmployee = async (id: number) => {
     dispatch({ type: ActionType.DELETE_EMPLOYEE_BEGIN });
+    if (state.user.id === id) {
+      dispatch({ type: ActionType.CANNOT_DELETE_YOURSELF });
+      clearAlert();
+      return;
+    }
     try {
-      if (state.user.id === id) {
-        dispatch({ type: ActionType.CANNOT_DELETE_YOURSELF });
-        clearAlert();
-        return;
-      }
       await axiosInstance.delete(`/api/users/${id}`);
       dispatch({ type: ActionType.DELETE_EMPLOYEE_SUCCESS });
       clearAlert();
@@ -156,6 +157,11 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const setEditEmployee = (id: number) => {
     dispatch({ type: ActionType.SET_EDIT_EMPLOYEE, payload: { id } });
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   };
 
   const editEmployee = async () => {
