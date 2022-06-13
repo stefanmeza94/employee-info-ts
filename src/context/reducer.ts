@@ -217,6 +217,37 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         loading: false,
         projects: action.payload,
       };
+    case ActionType.GET_ALL_PROJECTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: action.payload.msg,
+      };
+    case ActionType.DELETE_PROJECT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.DELETE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Project deleted successfully',
+        alertType: 'success',
+      };
+
+    case ActionType.DELETE_PROJECT_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
+
     default:
       return state;
   }

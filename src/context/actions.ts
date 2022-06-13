@@ -146,6 +146,19 @@ interface GetAllProjectsError {
   payload: { msg: string };
 }
 
+interface DeleteProjectBegin {
+  type: ActionType.DELETE_PROJECT_BEGIN;
+}
+
+interface DeleteProjectSuccess {
+  type: ActionType.DELETE_PROJECT_SUCCESS;
+}
+
+interface DeleteProjectError {
+  type: ActionType.DELETE_PROJECT_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -175,4 +188,7 @@ export type Action =
   | CreateProjectError
   | GetAllProjectsBegin
   | GetAllProjectsSuccess
-  | GetAllProjectsError;
+  | GetAllProjectsError
+  | DeleteProjectBegin
+  | DeleteProjectSuccess
+  | DeleteProjectError;

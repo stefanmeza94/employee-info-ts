@@ -4,10 +4,11 @@ import { useAppContext } from '../context/appContext';
 
 interface ProjectProps {
   name: string;
+  id: number;
 }
 
-const Project: React.FC<ProjectProps> = ({ name }) => {
-  const { deleteEmployee, setEditEmployee } = useAppContext();
+const Project: React.FC<ProjectProps> = ({ name, id }) => {
+  const { deleteProject } = useAppContext();
 
   return (
     <Wrapper>
@@ -23,7 +24,11 @@ const Project: React.FC<ProjectProps> = ({ name }) => {
         <footer>
           <div className='actions'>
             <button className='btn edit-btn'>Edit</button>
-            <button type='button' className='btn delete-btn'>
+            <button
+              type='button'
+              className='btn delete-btn'
+              onClick={() => deleteProject(id)}
+            >
               Delete
             </button>
             <Link to='/' className='btn info-btn'>

@@ -217,7 +217,21 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         type: ActionType.GET_ALL_PROJECTS_ERROR,
         payload: { msg: error.message },
       });
-      console.log(error);
+    }
+    clearAlert();
+  };
+
+  const deleteProject = async (id: string) => {
+    dispatch({ type: ActionType.DELETE_PROJECT_BEGIN });
+    try {
+      await axiosInstance.delete(`/api/projects/${id}`);
+      dispatch({ type: ActionType.DELETE_PROJECT_SUCCESS });
+      getAllProjects();
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.DELETE_PROJECT_ERROR,
+        payload: { msg: error.message },
+      });
     }
     clearAlert();
   };
@@ -242,6 +256,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         clearInput,
         addNewProject,
         getAllProjects,
+        deleteProject,
       }}
     >
       {children}
