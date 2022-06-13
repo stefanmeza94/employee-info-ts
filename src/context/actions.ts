@@ -132,6 +132,20 @@ interface CreateProjectError {
   payload: { msg: string };
 }
 
+interface GetAllProjectsBegin {
+  type: ActionType.GET_ALL_PROJECTS_BEGIN;
+}
+
+interface GetAllProjectsSuccess {
+  type: ActionType.GET_ALL_PROJECTS_SUCCESS;
+  payload: { name: string; id: number }[];
+}
+
+interface GetAllProjectsError {
+  type: ActionType.GET_ALL_PROJECTS_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -158,4 +172,7 @@ export type Action =
   | ClearInput
   | CreateProjectBegin
   | CreateProjectSuccess
-  | CreateProjectError;
+  | CreateProjectError
+  | GetAllProjectsBegin
+  | GetAllProjectsSuccess
+  | GetAllProjectsError;

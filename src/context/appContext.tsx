@@ -30,6 +30,7 @@ export const initialState = {
   roleListOptions: ['employee', 'project_manager', 'system_admin'],
   role: 'employee',
   project: '',
+  projects: [],
 };
 
 const AppContext = createContext<any>(initialState);
@@ -196,11 +197,27 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         name: state.project,
       });
       dispatch({ type: ActionType.CREATE_PROJECT_SUCCESS });
+      getAllProjects();
     } catch (error: any) {
       dispatch({
         type: ActionType.CREATE_PROJECT_ERROR,
         payload: { msg: error.response.data.arrayError[0].message },
       });
+    }
+    clearAlert();
+  };
+
+  const getAllProjects = async () => {
+    dispatch({ type: ActionType.CREATE_PROJECT_BEGIN });
+    try {
+      const { data } = await axiosInstance('/api/projects');
+      dispatch({ type: ActionType.GET_ALL_PROJECTS_SUCCESS, payload: data });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.GET_ALL_PROJECTS_ERROR,
+        payload: { msg: error.message },
+      });
+      console.log(error);
     }
     clearAlert();
   };
@@ -224,6 +241,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         clearEdit,
         clearInput,
         addNewProject,
+        getAllProjects,
       }}
     >
       {children}

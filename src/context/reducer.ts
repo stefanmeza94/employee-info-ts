@@ -1,6 +1,3 @@
-import { GrAttraction } from 'react-icons/gr';
-import { StylisPlugin } from 'styled-components';
-import { UnaryExpression } from 'typescript';
 import { ActionType } from './action-type';
 import { Action } from './actions';
 import { initialState } from './appContext';
@@ -31,6 +28,10 @@ interface ReducerState {
   city: string | null;
   role: string | null;
   project: string | null;
+  projects: {
+    id: number;
+    name: string;
+  }[];
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -204,6 +205,17 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         showAlert: true,
         alertText: action.payload.msg,
         alertType: 'danger',
+      };
+    case ActionType.GET_ALL_PROJECTS_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.GET_ALL_PROJECTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        projects: action.payload,
       };
     default:
       return state;
