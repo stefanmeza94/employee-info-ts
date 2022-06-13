@@ -245,6 +245,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const setEditProject = (id: number) => {
     dispatch({ type: ActionType.SET_EDIT_PROJECT, payload: { id } });
+    scrollToTop();
   };
 
   const editProject = async () => {

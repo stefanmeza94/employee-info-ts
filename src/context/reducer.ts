@@ -128,8 +128,8 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         ...state,
         loading: false,
         showAlert: true,
-        alertText: 'Employee deleted successfully',
-        alertType: 'success',
+        alertText: 'Employee deleted successfully!',
+        alertType: 'danger',
       };
     case ActionType.DELETE_EMPLOYEE_ERROR:
       return {
@@ -180,7 +180,7 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         loading: false,
         showAlert: true,
         alertType: 'success',
-        alertText: 'Employee updated successfully',
+        alertText: 'Employee updated successfully!',
       };
     case ActionType.CLEAR_INPUT:
       return {
@@ -197,7 +197,7 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         ...state,
         loading: false,
         showAlert: true,
-        alertText: 'New Project Created Successfully',
+        alertText: 'New Project Created Successfully!',
         alertType: 'success',
       };
     case ActionType.CREATE_PROJECT_ERROR:
@@ -237,8 +237,8 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         ...state,
         loading: false,
         showAlert: true,
-        alertText: 'Project deleted successfully',
-        alertType: 'success',
+        alertText: 'Project deleted successfully!',
+        alertType: 'danger',
       };
 
     case ActionType.DELETE_PROJECT_ERROR:
@@ -262,6 +262,27 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         ...state,
         isEditingProject: false,
         project: '',
+      };
+    case ActionType.UPDATE_PROJECT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.UPDATE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Project Updated Successfully!',
+        alertType: 'success',
+      };
+    case ActionType.UPDATE_PROJECT_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
       };
     default:
       return state;
