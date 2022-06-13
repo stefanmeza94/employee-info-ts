@@ -75,8 +75,8 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     localStorage.removeItem('user');
   };
 
-  const displayAlert = (msg: string, type: string) => {
-    dispatch({ type: ActionType.DISPLAY_ALERT, payload: { msg, type } });
+  const displayAlert = () => {
+    dispatch({ type: ActionType.DISPLAY_ALERT });
     clearAlert();
   };
 
@@ -130,6 +130,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         payload: { msg: error.message },
       });
     }
+    clearAlert();
   };
 
   const deleteEmployee = async (id: number) => {
@@ -188,6 +189,22 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: ActionType.CLEAR_INPUT, payload: name });
   };
 
+  const addNewProject = async () => {
+    dispatch({ type: ActionType.CREATE_PROJECT_BEGIN });
+    try {
+      await axiosInstance.post('/api/projects', {
+        name: state.project,
+      });
+      dispatch({ type: ActionType.CREATE_PROJECT_SUCCESS });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.CREATE_PROJECT_ERROR,
+        payload: { msg: error.response.data.arrayError[0].message },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -206,6 +223,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         editEmployee,
         clearEdit,
         clearInput,
+        addNewProject,
       }}
     >
       {children}

@@ -30,6 +30,7 @@ interface ReducerState {
   country: string | null;
   city: string | null;
   role: string | null;
+  project: string | null;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -183,7 +184,27 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         ...state,
         [action.payload]: '',
       };
-
+    case ActionType.CREATE_PROJECT_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.CREATE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'New Project Created Successfully',
+        alertType: 'success',
+      };
+    case ActionType.CREATE_PROJECT_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
     default:
       return state;
   }

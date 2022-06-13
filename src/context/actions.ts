@@ -32,7 +32,6 @@ interface HandleChange {
 
 interface DisplayAlert {
   type: ActionType.DISPLAY_ALERT;
-  payload: { msg: string; type: string };
 }
 
 interface ClearAlert {
@@ -120,6 +119,19 @@ interface ClearInput {
   payload: string;
 }
 
+interface CreateProjectBegin {
+  type: ActionType.CREATE_PROJECT_BEGIN;
+}
+
+interface CreateProjectSuccess {
+  type: ActionType.CREATE_PROJECT_SUCCESS;
+}
+
+interface CreateProjectError {
+  type: ActionType.CREATE_PROJECT_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -143,4 +155,7 @@ export type Action =
   | EditEmployeeBegin
   | EditEmployeeSuccess
   | EditEmployeeError
-  | ClearInput;
+  | ClearInput
+  | CreateProjectBegin
+  | CreateProjectSuccess
+  | CreateProjectError;
