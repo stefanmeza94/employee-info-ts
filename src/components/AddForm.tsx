@@ -8,8 +8,17 @@ interface AddFormProps {
 }
 
 const AddForm: React.FC<AddFormProps> = ({ nameOfInput }) => {
-  const { project, handleChange, showAlert, clearInput, addNewProject, displayAlert } =
-    useAppContext();
+  const {
+    project,
+    handleChange,
+    showAlert,
+    clearInput,
+    addNewProject,
+    displayAlert,
+    isEditingProject,
+    editProject,
+    clearEditProject,
+  } = useAppContext();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -20,16 +29,26 @@ const AddForm: React.FC<AddFormProps> = ({ nameOfInput }) => {
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
+
     if (!project) {
       displayAlert();
       return;
     }
+
+    if (isEditingProject) {
+      editProject();
+      return;
+    }
+
     addNewProject();
     clearInput(nameOfInput);
   };
 
   const handleClear = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (isEditingProject) {
+      clearEditProject();
+    }
     if (!project) {
       displayAlert();
       return;
@@ -40,7 +59,7 @@ const AddForm: React.FC<AddFormProps> = ({ nameOfInput }) => {
   return (
     <Wrapper>
       <form className='form' onSubmit={handleSubmit}>
-        <h4>Add new Project</h4>
+        <h4>{isEditingProject ? 'Edit your project' : 'Add new Project'}</h4>
         {showAlert && <Alert />}
         <div className='form-center'>
           <FormRow type='text' name={nameOfInput} value={project} onChange={onChange} />
@@ -51,10 +70,10 @@ const AddForm: React.FC<AddFormProps> = ({ nameOfInput }) => {
               type='submit'
               onClick={handleSubmit}
             >
-              Submit
+              {isEditingProject ? 'Edit' : 'Submit'}
             </button>
             <button className='btn btn-block clear-btn' onClick={handleClear}>
-              Clear
+              {isEditingProject ? 'Go Back' : 'Clear'}
             </button>
           </div>
         </div>

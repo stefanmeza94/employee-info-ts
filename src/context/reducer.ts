@@ -21,17 +21,19 @@ interface ReducerState {
     seniority: string | null;
     email: string;
   }[];
-  isEditing: boolean;
+  isEditingEmployee: boolean;
   employeeEditId: number | null | undefined;
   seniority: string | null;
   country: string | null;
   city: string | null;
   role: string | null;
-  project: string | null;
+  project: string | undefined;
   projects: {
     id: number;
     name: string;
   }[];
+  isEditingProject: boolean;
+  projectEditId: number | undefined | null;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -146,22 +148,22 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertType: 'danger',
       };
     case ActionType.SET_EDIT_EMPLOYEE:
-      const curEmployeeEdit = state.employees.find(
+      const editingEmployee = state.employees.find(
         (employee) => employee.id === action.payload.id
       );
       return {
         ...state,
-        isEditing: true,
-        employeeEditId: curEmployeeEdit?.id,
-        name: curEmployeeEdit?.name || '',
-        email: curEmployeeEdit?.email || '',
-        seniority: curEmployeeEdit?.seniority?.toLowerCase() || '',
-        role: curEmployeeEdit?.role?.toLowerCase() || '',
+        isEditingEmployee: true,
+        employeeEditId: editingEmployee?.id,
+        name: editingEmployee?.name || '',
+        email: editingEmployee?.email || '',
+        seniority: editingEmployee?.seniority?.toLowerCase() || '',
+        role: editingEmployee?.role?.toLowerCase() || '',
       };
-    case ActionType.CLEAR_EDIT:
+    case ActionType.CLEAR_EDIT_EMPLOYEE:
       return {
         ...state,
-        isEditing: false,
+        isEditingEmployee: false,
         name: '',
         email: '',
         role: 'employee',
@@ -247,7 +249,20 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertText: action.payload.msg,
         alertType: 'danger',
       };
-
+    case ActionType.SET_EDIT_PROJECT:
+      const editingProject = state.projects.find((p) => p.id === action.payload.id);
+      return {
+        ...state,
+        isEditingProject: true,
+        projectEditId: editingProject?.id,
+        project: editingProject?.name,
+      };
+    case ActionType.CLEAR_EDIT_PROJECT:
+      return {
+        ...state,
+        isEditingProject: false,
+        project: '',
+      };
     default:
       return state;
   }

@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer } from 'react';
 import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
+import { Action } from 'history';
 
 const user = localStorage.getItem('user');
 
@@ -19,7 +20,7 @@ export const initialState = {
   alertType: '',
   alertText: '',
   employees: [],
-  isEditing: false,
+  isEditingEmployee: false,
   employeeEditId: null,
   seniorityListOptions: ['intern', 'junior', 'medior', 'senior'],
   seniority: 'intern',
@@ -31,6 +32,8 @@ export const initialState = {
   role: 'employee',
   project: '',
   projects: [],
+  isEditingProject: false,
+  projectEditId: null,
 };
 
 const AppContext = createContext<any>(initialState);
@@ -85,6 +88,14 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setTimeout(() => {
       dispatch({ type: ActionType.CLEAR_ALERT });
     }, 2500);
+  };
+
+  const scrollToTop = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   };
 
   const handleChange = ({ name, value }: { name: string; value: string }) => {
@@ -157,11 +168,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const setEditEmployee = (id: number) => {
     dispatch({ type: ActionType.SET_EDIT_EMPLOYEE, payload: { id } });
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
+    scrollToTop();
   };
 
   const editEmployee = async () => {
@@ -183,10 +190,10 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   };
 
   const clearEdit = () => {
-    dispatch({ type: ActionType.CLEAR_EDIT });
+    dispatch({ type: ActionType.CLEAR_EDIT_EMPLOYEE });
   };
 
-  const clearInput = (name: string) => {
+  const clearInput = (name: any) => {
     dispatch({ type: ActionType.CLEAR_INPUT, payload: name });
   };
 
@@ -236,6 +243,31 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     clearAlert();
   };
 
+  const setEditProject = (id: number) => {
+    dispatch({ type: ActionType.SET_EDIT_PROJECT, payload: { id } });
+  };
+
+  const editProject = async () => {
+    dispatch({ type: ActionType.UPDATE_PROJECT_BEGIN });
+    try {
+      await axiosInstance.put(`/api/projects/${state.projectEditId}`, {
+        name: state.project,
+      });
+      dispatch({ type: ActionType.UPDATE_PROJECT_SUCCESS });
+      getAllProjects();
+      clearEditProject();
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.UPDATE_PROJECT_ERROR,
+        payload: { msg: error.message },
+      });
+    }
+  };
+
+  const clearEditProject = () => {
+    dispatch({ type: ActionType.CLEAR_EDIT_PROJECT });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -257,6 +289,9 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         addNewProject,
         getAllProjects,
         deleteProject,
+        setEditProject,
+        editProject,
+        clearEditProject,
       }}
     >
       {children}

@@ -111,7 +111,7 @@ interface EditEmployeeError {
 }
 
 interface ClearEdit {
-  type: ActionType.CLEAR_EDIT;
+  type: ActionType.CLEAR_EDIT_EMPLOYEE;
 }
 
 interface ClearInput {
@@ -159,6 +159,27 @@ interface DeleteProjectError {
   payload: { msg: string };
 }
 
+interface SetEditProject {
+  type: ActionType.SET_EDIT_PROJECT;
+  payload: { id: number };
+}
+
+interface ClearEditProject {
+  type: ActionType.CLEAR_EDIT_PROJECT;
+}
+
+interface UpdateProjectBegin {
+  type: ActionType.UPDATE_PROJECT_BEGIN;
+}
+
+interface UpdateProjectSuccess {
+  type: ActionType.UPDATE_PROJECT_SUCCESS;
+}
+interface UpdateProjectError {
+  type: ActionType.UPDATE_PROJECT_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -191,4 +212,9 @@ export type Action =
   | GetAllProjectsError
   | DeleteProjectBegin
   | DeleteProjectSuccess
-  | DeleteProjectError;
+  | DeleteProjectError
+  | SetEditProject
+  | ClearEditProject
+  | UpdateProjectBegin
+  | UpdateProjectSuccess
+  | UpdateProjectError;

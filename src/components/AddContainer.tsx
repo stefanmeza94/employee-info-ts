@@ -14,7 +14,7 @@ const AddContainer = () => {
     showAlert,
     clearInputs,
     addNewEmplooyee,
-    isEditing,
+    isEditingEmployee,
     seniorityListOptions,
     seniority,
     roleListOptions,
@@ -34,7 +34,7 @@ const AddContainer = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (isEditing) {
+    if (isEditingEmployee) {
       editEmployee();
       return;
     }
@@ -49,7 +49,7 @@ const AddContainer = () => {
 
   const handleClear = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (isEditing) {
+    if (isEditingEmployee) {
       clearEdit();
     }
     if (name || email) {
@@ -63,7 +63,7 @@ const AddContainer = () => {
   return (
     <Wrapper>
       <form className='form'>
-        {isEditing ? <h4>Edit your employee</h4> : <h4>add new employee</h4>}
+        {isEditingEmployee ? <h4>Edit your employee</h4> : <h4>add new employee</h4>}
         {showAlert && <Alert />}
         <div className='form-center'>
           <FormRow type='text' name='name' value={name} onChange={onChange} />
@@ -86,10 +86,10 @@ const AddContainer = () => {
               type='submit'
               onClick={handleSubmit}
             >
-              {isEditing ? 'edit' : 'submit'}
+              {isEditingEmployee ? 'edit' : 'submit'}
             </button>
             <button className='btn btn-block clear-btn' onClick={handleClear}>
-              {isEditing ? 'Go Back' : 'Clear'}
+              {isEditingEmployee ? 'Go Back' : 'Clear'}
             </button>
           </div>
         </div>
