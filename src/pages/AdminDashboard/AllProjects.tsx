@@ -1,5 +1,7 @@
+import AddForm from '../../components/AddForm';
+
 const AllProjects = () => {
-  return <h1>AllProjects</h1>;
+  return <AddForm name='project' />;
 };
 
 export default AllProjects;

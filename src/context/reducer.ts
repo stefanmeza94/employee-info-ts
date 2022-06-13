@@ -178,6 +178,12 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertType: 'success',
         alertText: 'Employee updated successfully',
       };
+    case ActionType.CLEAR_INPUT:
+      return {
+        ...state,
+        [action.payload]: '',
+      };
+
     default:
       return state;
   }

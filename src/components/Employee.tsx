@@ -34,6 +34,9 @@ const Employee: React.FC<EmployeeProps> = ({ id, email, name }) => {
             >
               Delete
             </button>
+            <Link to={`/${id}`} className='btn info-btn'>
+              More info
+            </Link>
           </div>
         </footer>
       </div>

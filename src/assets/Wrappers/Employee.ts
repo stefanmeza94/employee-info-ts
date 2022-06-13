@@ -82,8 +82,12 @@ const Wrapper = styled.article`
   footer {
     margin-top: 1rem;
   }
+  .actions {
+    display: flex;
+  }
   .edit-btn,
-  .delete-btn {
+  .delete-btn,
+  .info-btn {
     letter-spacing: var(--letterSpacing);
     cursor: pointer;
     height: 30px;
@@ -96,6 +100,11 @@ const Wrapper = styled.article`
   .delete-btn {
     color: var(--red-dark);
     background: var(--red-light);
+  }
+  .info-btn {
+    margin-left: auto;
+    color: var(--white);
+    background-color: var(--grey-400);
   }
   &:hover .actions {
     visibility: visible;

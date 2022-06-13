@@ -29,7 +29,7 @@ const EmployeeContainer = () => {
 
   return (
     <Wrapper>
-      <h5>{`${employees.length} Employee Found`}</h5>
+      <h5>{`${employees.length} Employees Found`}</h5>
       <div className='jobs'>
         {employees.map((employee: any) => {
           return <Employee key={employee.id} {...employee} />;

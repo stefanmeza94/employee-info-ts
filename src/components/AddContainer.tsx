@@ -17,8 +17,6 @@ const AddContainer = () => {
     isEditing,
     seniorityListOptions,
     seniority,
-    cityListOptions,
-    city,
     roleListOptions,
     role,
     editEmployee,

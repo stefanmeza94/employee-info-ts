@@ -3,6 +3,7 @@ import { useAppContext } from './context/appContext';
 
 import SharedLayout from './pages/SharedLayout';
 import Employees from './pages/AdminDashboard/Employees';
+import SingleEmployee from './components/SingleEmployee';
 import AllProjects from './pages/AdminDashboard/AllProjects';
 import Cities from './pages/AdminDashboard/Cities';
 import Countries from './pages/AdminDashboard/Countries';
@@ -23,7 +24,7 @@ function App() {
 
   return (
     <Routes>
-      {user && user.role == 'SYSTEM_ADMIN' ? (
+      {user && user.role === 'SYSTEM_ADMIN' ? (
         <Route
           path='/'
           element={
@@ -33,6 +34,7 @@ function App() {
           }
         >
           <Route index element={<Employees />} />
+          <Route path='/:employeeId' element={<SingleEmployee />} />
           <Route path='all-projects' element={<AllProjects />} />
           <Route path='cities' element={<Cities />} />
           <Route path='countries' element={<Countries />} />

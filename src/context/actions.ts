@@ -115,6 +115,11 @@ interface ClearEdit {
   type: ActionType.CLEAR_EDIT;
 }
 
+interface ClearInput {
+  type: ActionType.CLEAR_INPUT;
+  payload: string;
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -137,4 +142,5 @@ export type Action =
   | ClearEdit
   | EditEmployeeBegin
   | EditEmployeeSuccess
-  | EditEmployeeError;
+  | EditEmployeeError
+  | ClearInput;

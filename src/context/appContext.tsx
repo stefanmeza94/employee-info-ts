@@ -2,8 +2,6 @@ import { createContext, useContext, useReducer } from 'react';
 import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
-import { useNavigate } from 'react-router-dom';
-import { BsWindowSidebar } from 'react-icons/bs';
 
 const user = localStorage.getItem('user');
 
@@ -31,13 +29,13 @@ export const initialState = {
   country: '',
   roleListOptions: ['employee', 'project_manager', 'system_admin'],
   role: 'employee',
+  project: '',
 };
 
 const AppContext = createContext<any>(initialState);
 
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const navigate = useNavigate();
 
   // axios instance
   const axiosInstance = axios.create({
@@ -186,6 +184,10 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: ActionType.CLEAR_EDIT });
   };
 
+  const clearInput = (name: string) => {
+    dispatch({ type: ActionType.CLEAR_INPUT, payload: name });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -203,6 +205,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setEditEmployee,
         editEmployee,
         clearEdit,
+        clearInput,
       }}
     >
       {children}
