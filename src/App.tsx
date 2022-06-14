@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useAppContext } from './context/appContext';
 
 import SharedLayout from './pages/SharedLayout';
@@ -18,6 +18,8 @@ import Projects from './pages/ProjectManagerDashboard/Projects';
 
 import Landing from './pages/Landing';
 import ProtectedRoute from './pages/ProtectedRoute';
+
+import NotFound from './pages/NotFound';
 
 function App() {
   const { user } = useAppContext();
@@ -58,6 +60,7 @@ function App() {
         </Route>
       )}
       <Route path='/landing' element={<Landing />} />
+      <Route path='*' element={<NotFound />} />
     </Routes>
   );
 }

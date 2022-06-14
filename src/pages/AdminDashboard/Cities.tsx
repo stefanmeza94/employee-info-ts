@@ -4,6 +4,7 @@ import { useAppContext } from '../../context/appContext';
 
 const Cities = () => {
   const { isEditingCity, editCity, addNewCity, city } = useAppContext();
+
   return (
     <>
       <AddForm

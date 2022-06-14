@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
@@ -42,6 +43,8 @@ const AppContext = createContext<any>(initialState);
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const navigate = useNavigate();
+
   // axios instance
   const axiosInstance = axios.create({
     baseURL: 'http://localhost:5000',
@@ -78,6 +81,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const handleLogout = () => {
     dispatch({ type: ActionType.LOGOUT_USER });
     localStorage.removeItem('user');
+    navigate('/landing');
   };
 
   const displayAlert = () => {
