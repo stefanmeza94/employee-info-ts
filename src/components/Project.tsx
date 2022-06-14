@@ -33,9 +33,6 @@ const Project: React.FC<ProjectProps> = ({ name, id }) => {
             >
               Delete
             </button>
-            <Link to='/' className='btn info-btn'>
-              More info
-            </Link>
           </div>
         </footer>
       </div>

@@ -34,6 +34,7 @@ interface ReducerState {
   }[];
   isEditingProject: boolean;
   projectEditId: number | undefined | null;
+  isEditingCity: boolean;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -257,11 +258,11 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         projectEditId: editingProject?.id,
         project: editingProject?.name,
       };
-    case ActionType.CLEAR_EDIT_PROJECT:
+    case ActionType.CLEAR_EDIT_CATEGORY:
       return {
         ...state,
-        isEditingProject: false,
-        project: '',
+        [action.payload.category]: false,
+        [action.payload.name]: '',
       };
     case ActionType.UPDATE_PROJECT_BEGIN:
       return {

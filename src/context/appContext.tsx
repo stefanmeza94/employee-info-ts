@@ -34,6 +34,7 @@ export const initialState = {
   projects: [],
   isEditingProject: false,
   projectEditId: null,
+  isEditingCity: false,
 };
 
 const AppContext = createContext<any>(initialState);
@@ -256,7 +257,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       });
       dispatch({ type: ActionType.UPDATE_PROJECT_SUCCESS });
       getAllProjects();
-      clearEditProject();
+      clearEditCategory('isEditingProject', 'project');
     } catch (error: any) {
       dispatch({
         type: ActionType.UPDATE_PROJECT_ERROR,
@@ -265,8 +266,8 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   };
 
-  const clearEditProject = () => {
-    dispatch({ type: ActionType.CLEAR_EDIT_PROJECT });
+  const clearEditCategory = (category: string, name: string) => {
+    dispatch({ type: ActionType.CLEAR_EDIT_CATEGORY, payload: { category, name } });
   };
 
   return (
@@ -292,7 +293,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         deleteProject,
         setEditProject,
         editProject,
-        clearEditProject,
+        clearEditCategory,
       }}
     >
       {children}

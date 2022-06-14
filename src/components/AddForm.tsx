@@ -4,21 +4,24 @@ import Wrapper from '../assets/Wrappers/SearchContainer';
 import Alert from '../components/Alert';
 
 interface AddFormProps {
+  category: string;
+  name: string;
   nameOfInput: string;
+  editing: boolean;
+  editFunc: () => {};
+  addNew: () => {};
 }
 
-const AddForm: React.FC<AddFormProps> = ({ nameOfInput }) => {
-  const {
-    project,
-    handleChange,
-    showAlert,
-    clearInput,
-    addNewProject,
-    displayAlert,
-    isEditingProject,
-    editProject,
-    clearEditProject,
-  } = useAppContext();
+const AddForm: React.FC<AddFormProps> = ({
+  category,
+  name,
+  nameOfInput,
+  editing,
+  editFunc,
+  addNew,
+}) => {
+  const { handleChange, showAlert, clearInput, displayAlert, clearEditCategory } =
+    useAppContext();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -30,26 +33,26 @@ const AddForm: React.FC<AddFormProps> = ({ nameOfInput }) => {
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
-    if (!project) {
+    if (!name) {
       displayAlert();
       return;
     }
 
-    if (isEditingProject) {
-      editProject();
+    if (editing) {
+      editFunc();
       return;
     }
 
-    addNewProject();
+    addNew();
     clearInput(nameOfInput);
   };
 
   const handleClear = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (isEditingProject) {
-      clearEditProject();
+    if (editing) {
+      clearEditCategory(category, name);
     }
-    if (!project) {
+    if (!name) {
       displayAlert();
       return;
     }
@@ -59,10 +62,10 @@ const AddForm: React.FC<AddFormProps> = ({ nameOfInput }) => {
   return (
     <Wrapper>
       <form className='form' onSubmit={handleSubmit}>
-        <h4>{isEditingProject ? 'Edit your project' : 'Add new Project'}</h4>
+        <h4>{editing ? `Edit your ${nameOfInput}` : `Add new ${nameOfInput}`}</h4>
         {showAlert && <Alert />}
         <div className='form-center'>
-          <FormRow type='text' name={nameOfInput} value={project} onChange={onChange} />
+          <FormRow type='text' name={nameOfInput} value={name} onChange={onChange} />
 
           <div className='btn-container'>
             <button
@@ -70,10 +73,10 @@ const AddForm: React.FC<AddFormProps> = ({ nameOfInput }) => {
               type='submit'
               onClick={handleSubmit}
             >
-              {isEditingProject ? 'Edit' : 'Submit'}
+              {editing ? 'Edit' : 'Submit'}
             </button>
             <button className='btn btn-block clear-btn' onClick={handleClear}>
-              {isEditingProject ? 'Go Back' : 'Clear'}
+              {editing ? 'Go Back' : 'Clear'}
             </button>
           </div>
         </div>

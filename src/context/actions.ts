@@ -164,8 +164,9 @@ interface SetEditProject {
   payload: { id: number };
 }
 
-interface ClearEditProject {
-  type: ActionType.CLEAR_EDIT_PROJECT;
+interface ClearEditCategory {
+  type: ActionType.CLEAR_EDIT_CATEGORY;
+  payload: { category: string; name: string };
 }
 
 interface UpdateProjectBegin {
@@ -214,7 +215,7 @@ export type Action =
   | DeleteProjectSuccess
   | DeleteProjectError
   | SetEditProject
-  | ClearEditProject
+  | ClearEditCategory
   | UpdateProjectBegin
   | UpdateProjectSuccess
   | UpdateProjectError;
