@@ -181,6 +181,37 @@ interface UpdateProjectError {
   payload: { msg: string };
 }
 
+interface CreateCityBegin {
+  type: ActionType.CREATE_CITY_BEGIN;
+}
+
+interface CreateCitySuccess {
+  type: ActionType.CREATE_CITY_SUCCESS;
+}
+
+interface CreateCityError {
+  type: ActionType.CREATE_CITY_ERROR;
+  payload: { msg: string };
+}
+
+interface GetAllCitiesBegin {
+  type: ActionType.GET_ALL_CITIES_BEGIN;
+}
+
+interface GetAllCitiesSuccess {
+  type: ActionType.GET_ALL_CITIES_SUCCESS;
+  payload: {
+    id: number;
+    countryId: number;
+    name: string;
+  }[];
+}
+
+interface GetAllCitiesError {
+  type: ActionType.GET_ALL_CITIES_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -218,4 +249,10 @@ export type Action =
   | ClearEditCategory
   | UpdateProjectBegin
   | UpdateProjectSuccess
-  | UpdateProjectError;
+  | UpdateProjectError
+  | CreateCityBegin
+  | CreateCitySuccess
+  | CreateCityError
+  | GetAllCitiesBegin
+  | GetAllCitiesSuccess
+  | GetAllCitiesError;

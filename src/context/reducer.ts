@@ -35,6 +35,11 @@ interface ReducerState {
   isEditingProject: boolean;
   projectEditId: number | undefined | null;
   isEditingCity: boolean;
+  cities: {
+    id: number;
+    name: string;
+    countryId: number;
+  }[];
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -284,6 +289,46 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         showAlert: true,
         alertText: action.payload.msg,
         alertType: 'danger',
+      };
+    case ActionType.CREATE_CITY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.CREATE_CITY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'New City Created Successfully!',
+        alertType: 'success',
+      };
+    case ActionType.CREATE_CITY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: action.payload.msg,
+      };
+    case ActionType.GET_ALL_CITIES_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.GET_ALL_CITIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        cities: action.payload,
+      };
+    case ActionType.GET_ALL_CITIES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: action.payload.msg,
       };
     default:
       return state;

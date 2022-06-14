@@ -2,7 +2,7 @@ import { createContext, useContext, useReducer } from 'react';
 import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
-import { Action } from 'history';
+import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 const user = localStorage.getItem('user');
 
@@ -25,7 +25,6 @@ export const initialState = {
   seniorityListOptions: ['intern', 'junior', 'medior', 'senior'],
   seniority: 'intern',
   cityListOptions: ['Nis', 'Beograd', 'Novi Sad', 'Cacak', 'Prokuplje'],
-  city: '',
   countryListOptions: ['Srbija', 'Crna Gora', 'Ukrajina', 'Makedonija', 'Nemacka'],
   country: '',
   roleListOptions: ['employee', 'project_manager', 'system_admin'],
@@ -35,6 +34,8 @@ export const initialState = {
   isEditingProject: false,
   projectEditId: null,
   isEditingCity: false,
+  city: '',
+  cities: [],
 };
 
 const AppContext = createContext<any>(initialState);
@@ -270,6 +271,30 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: ActionType.CLEAR_EDIT_CATEGORY, payload: { category, name } });
   };
 
+  const addNewCity = async () => {
+    dispatch({ type: ActionType.CREATE_CITY_BEGIN });
+    try {
+      await axiosInstance.post('api/cities', { name: state.city });
+      dispatch({ type: ActionType.CREATE_CITY_SUCCESS });
+      getAllCities();
+    } catch (error: any) {
+      dispatch({ type: ActionType.CREATE_CITY_ERROR, payload: { msg: error.message } });
+    }
+  };
+
+  const getAllCities = async () => {
+    dispatch({ type: ActionType.GET_ALL_CITIES_BEGIN });
+    try {
+      const { data } = await axiosInstance('api/cities');
+      dispatch({ type: ActionType.GET_ALL_CITIES_SUCCESS, payload: data });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.GET_ALL_CITIES_ERROR,
+        payload: { msg: error.message },
+      });
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -294,6 +319,8 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setEditProject,
         editProject,
         clearEditCategory,
+        addNewCity,
+        getAllCities,
       }}
     >
       {children}

@@ -3,16 +3,18 @@ import CitiesContainer from '../../components/CitiesContainer';
 import { useAppContext } from '../../context/appContext';
 
 const Cities = () => {
-  const { isEditingCity, editCity, getAllCities } = useAppContext();
+  const { isEditingCity, editCity, addNewCity, city } = useAppContext();
   return (
     <>
-      {/* <AddForm
+      <AddForm
+        category='isEditingCity'
+        name={city}
         nameOfInput='city'
         editing={isEditingCity}
         editFunc={editCity}
-        getAll={getAllCities}
-      /> */}
-      {/* <CitiesContainer /> */}
+        addNew={addNewCity}
+      />
+      <CitiesContainer />
     </>
   );
 };

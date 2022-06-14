@@ -4,8 +4,8 @@ import City from '../components/Project';
 import Wrapper from '../assets/Wrappers/EmployeeContainer';
 import Loading from './Loading';
 
-const ProjectsContainer = () => {
-  const { getAllCities, citites, loading } = useAppContext();
+const CitiesContainer = () => {
+  const { getAllCities, cities, loading } = useAppContext();
 
   useEffect(() => {
     getAllCities();
@@ -19,19 +19,19 @@ const ProjectsContainer = () => {
     );
   }
 
-  if (citites.length === 0) {
+  if (cities.length === 0) {
     return (
       <Wrapper>
-        <h2>There is no single project</h2>
+        <h2>There is no single city</h2>
       </Wrapper>
     );
   }
 
   return (
     <Wrapper>
-      <h5>{`${citites.length} Projects Found`}</h5>
+      <h5>{`${cities.length} cities Found`}</h5>
       <div className='jobs'>
-        {citites.map((city: any) => {
+        {cities.map((city: any) => {
           return <City key={city.id} {...city} />;
         })}
       </div>
@@ -39,4 +39,4 @@ const ProjectsContainer = () => {
   );
 };
 
-export default ProjectsContainer;
+export default CitiesContainer;
