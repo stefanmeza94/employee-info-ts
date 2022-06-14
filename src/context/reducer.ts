@@ -330,6 +330,19 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertType: 'danger',
         alertText: action.payload.msg,
       };
+    case ActionType.DELETE_CITY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.DELETE_CITY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: 'City deleted successfully!',
+      };
     default:
       return state;
   }

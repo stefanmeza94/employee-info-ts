@@ -4,10 +4,11 @@ import { useAppContext } from '../context/appContext';
 interface CityProps {
   name: string;
   id: number;
+  countryId: number;
 }
 
-const City: React.FC<CityProps> = ({ name, id }) => {
-  // const { deleteProject, setEditProject } = useAppContext();
+const City: React.FC<CityProps> = ({ name, id, countryId }) => {
+  const { deleteCity } = useAppContext();
 
   return (
     <Wrapper>
@@ -26,7 +27,7 @@ const City: React.FC<CityProps> = ({ name, id }) => {
             <button
               type='button'
               className='btn delete-btn'
-              // onClick={() => deleteProject(id)}
+              onClick={() => deleteCity(id)}
             >
               Delete
             </button>

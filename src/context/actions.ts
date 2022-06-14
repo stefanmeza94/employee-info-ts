@@ -212,6 +212,19 @@ interface GetAllCitiesError {
   payload: { msg: string };
 }
 
+interface DeleteCityBegin {
+  type: ActionType.DELETE_CITY_BEGIN;
+}
+
+interface DeleteCitySuccess {
+  type: ActionType.DELETE_CITY_SUCCESS;
+}
+
+interface DeleteCityError {
+  type: ActionType.DELETE_CITY_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -255,4 +268,7 @@ export type Action =
   | CreateCityError
   | GetAllCitiesBegin
   | GetAllCitiesSuccess
-  | GetAllCitiesError;
+  | GetAllCitiesError
+  | DeleteCityBegin
+  | DeleteCitySuccess
+  | DeleteCityError;

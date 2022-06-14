@@ -2,7 +2,6 @@ import { createContext, useContext, useReducer } from 'react';
 import axios from 'axios';
 import reducer from './reducer';
 import { ActionType } from './action-type';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
 
 const user = localStorage.getItem('user');
 
@@ -280,6 +279,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     } catch (error: any) {
       dispatch({ type: ActionType.CREATE_CITY_ERROR, payload: { msg: error.message } });
     }
+    clearAlert();
   };
 
   const getAllCities = async () => {
@@ -292,7 +292,20 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         type: ActionType.GET_ALL_CITIES_ERROR,
         payload: { msg: error.message },
       });
+      clearAlert();
     }
+  };
+
+  const deleteCity = async (id: number) => {
+    dispatch({ type: ActionType.DELETE_CITY_BEGIN });
+    try {
+      await axiosInstance.delete(`/api/cities/${id}`);
+      dispatch({ type: ActionType.DELETE_CITY_SUCCESS });
+      getAllCities();
+    } catch (error: any) {
+      dispatch({ type: ActionType.DELETE_CITY_ERROR, payload: { msg: error.message } });
+    }
+    clearAlert();
   };
 
   return (
@@ -321,6 +334,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         clearEditCategory,
         addNewCity,
         getAllCities,
+        deleteCity,
       }}
     >
       {children}

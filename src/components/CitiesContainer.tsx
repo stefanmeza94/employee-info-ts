@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
-import City from '../components/Project';
+import City from '../components/City';
 import Wrapper from '../assets/Wrappers/EmployeeContainer';
 import Loading from './Loading';
 
