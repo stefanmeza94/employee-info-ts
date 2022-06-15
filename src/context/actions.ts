@@ -230,6 +230,19 @@ interface SetEditCity {
   payload: { cityId: number };
 }
 
+interface EditCityBegin {
+  type: ActionType.EDIT_CITY_BEGIN;
+}
+
+interface EditCitySuccess {
+  type: ActionType.EDIT_CITY_SUCCESS;
+}
+
+interface EditCityError {
+  type: ActionType.EDIT_CITY_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -277,4 +290,7 @@ export type Action =
   | DeleteCityBegin
   | DeleteCitySuccess
   | DeleteCityError
-  | SetEditCity;
+  | SetEditCity
+  | EditCityBegin
+  | EditCitySuccess
+  | EditCityError;

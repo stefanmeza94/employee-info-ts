@@ -318,6 +318,28 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     scrollToTop();
   };
 
+  const editCity = async () => {
+    console.log(state.city);
+    dispatch({ type: ActionType.EDIT_CITY_BEGIN });
+    try {
+      await axiosInstance.put(`/api/cities/${state.cityEditId}`, {
+        name: state.city,
+      });
+      dispatch({ type: ActionType.EDIT_CITY_SUCCESS });
+      getAllCities();
+      clearEditCategory('isEditingCity', 'city');
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.EDIT_CITY_ERROR,
+        payload: {
+          msg:
+            error.response.data.arrayError[0].message + '. Please choose different name!',
+        },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -346,6 +368,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         getAllCities,
         deleteCity,
         setEditCity,
+        editCity,
       }}
     >
       {children}

@@ -352,6 +352,27 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         cityEditId: editingCity?.id,
         isEditingCity: true,
       };
+    case ActionType.EDIT_CITY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.EDIT_CITY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'City Was Updated Successfully!',
+        alertType: 'success',
+      };
+    case ActionType.EDIT_CITY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
     default:
       return state;
   }
