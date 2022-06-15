@@ -25,7 +25,7 @@ interface ReducerState {
   employeeEditId: number | null | undefined;
   seniority: string | null;
   country: string | null;
-  city: string | null;
+  city: string | undefined;
   role: string | null;
   project: string | undefined;
   projects: {
@@ -40,6 +40,7 @@ interface ReducerState {
     name: string;
     countryId: number;
   }[];
+  cityEditId: null | number | undefined;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -342,6 +343,14 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         showAlert: true,
         alertType: 'danger',
         alertText: 'City deleted successfully!',
+      };
+    case ActionType.SET_EDIT_CITY:
+      const editingCity = state.cities.find((city) => city.id === action.payload.cityId);
+      return {
+        ...state,
+        city: editingCity?.name,
+        cityEditId: editingCity?.id,
+        isEditingCity: true,
       };
     default:
       return state;

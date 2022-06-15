@@ -36,6 +36,7 @@ export const initialState = {
   isEditingCity: false,
   city: '',
   cities: [],
+  cityEditId: null,
 };
 
 const AppContext = createContext<any>(initialState);
@@ -312,6 +313,11 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     clearAlert();
   };
 
+  const setEditCity = (id: number) => {
+    dispatch({ type: ActionType.SET_EDIT_CITY, payload: { cityId: id } });
+    scrollToTop();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -339,6 +345,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         addNewCity,
         getAllCities,
         deleteCity,
+        setEditCity,
       }}
     >
       {children}

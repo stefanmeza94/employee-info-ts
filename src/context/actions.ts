@@ -225,6 +225,11 @@ interface DeleteCityError {
   payload: { msg: string };
 }
 
+interface SetEditCity {
+  type: ActionType.SET_EDIT_CITY;
+  payload: { cityId: number };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -271,4 +276,5 @@ export type Action =
   | GetAllCitiesError
   | DeleteCityBegin
   | DeleteCitySuccess
-  | DeleteCityError;
+  | DeleteCityError
+  | SetEditCity;
