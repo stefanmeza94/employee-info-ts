@@ -243,6 +243,19 @@ interface EditCityError {
   payload: { msg: string };
 }
 
+interface CreateCountryBegin {
+  type: ActionType.CREATE_COUNTRY_BEGIN;
+}
+
+interface CreateCountrySuccess {
+  type: ActionType.CREATE_COUNTRY_SUCCESS;
+}
+
+interface CreateCountryError {
+  type: ActionType.CREATE_COUNTRY_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -293,4 +306,7 @@ export type Action =
   | SetEditCity
   | EditCityBegin
   | EditCitySuccess
-  | EditCityError;
+  | EditCityError
+  | CreateCountryBegin
+  | CreateCountrySuccess
+  | CreateCountryError;

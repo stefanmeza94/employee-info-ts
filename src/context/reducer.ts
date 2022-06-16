@@ -41,6 +41,9 @@ interface ReducerState {
     countryId: number;
   }[];
   cityEditId: null | number | undefined;
+  isEditingCountry: boolean;
+  countryEditId: number | null;
+  countries: any;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {

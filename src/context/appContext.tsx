@@ -24,9 +24,6 @@ export const initialState = {
   employeeEditId: null,
   seniorityListOptions: ['intern', 'junior', 'medior', 'senior'],
   seniority: 'intern',
-  cityListOptions: ['Nis', 'Beograd', 'Novi Sad', 'Cacak', 'Prokuplje'],
-  countryListOptions: ['Srbija', 'Crna Gora', 'Ukrajina', 'Makedonija', 'Nemacka'],
-  country: '',
   roleListOptions: ['employee', 'project_manager', 'system_admin'],
   role: 'employee',
   project: '',
@@ -37,6 +34,10 @@ export const initialState = {
   city: '',
   cities: [],
   cityEditId: null,
+  country: '',
+  isEditingCountry: false,
+  countries: [],
+  countryEditId: null,
 };
 
 const AppContext = createContext<any>(initialState);
@@ -319,7 +320,6 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   };
 
   const editCity = async () => {
-    console.log(state.city);
     dispatch({ type: ActionType.EDIT_CITY_BEGIN });
     try {
       await axiosInstance.put(`/api/cities/${state.cityEditId}`, {
@@ -338,6 +338,18 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       });
     }
     clearAlert();
+  };
+
+  const addNewCountry = async () => {
+    dispatch({ type: ActionType.CREATE_COUNTRY_BEGIN });
+    try {
+      await axiosInstance.post('api/countries', {
+        name: state.country,
+      });
+      dispatch({ type: ActionType.CREATE_COUNTRY_SUCCESS });
+    } catch (error: any) {
+      dispatch({ type: ActionType.CREATE_COUNTRY_ERROR, payload: { msg: error.msg } });
+    }
   };
 
   return (
@@ -369,6 +381,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         deleteCity,
         setEditCity,
         editCity,
+        addNewCountry,
       }}
     >
       {children}
