@@ -290,6 +290,24 @@ interface DeleteCountryError {
   payload: { msg: string };
 }
 
+interface EditCountryBegin {
+  type: ActionType.EDIT_COUNTRY_BEGIN;
+}
+
+interface EditCountrySuccess {
+  type: ActionType.EDIT_COUNTRY_SUCCESS;
+}
+
+interface EditCountryError {
+  type: ActionType.EDIT_COUNTRY_ERROR;
+  payload: { msg: string };
+}
+
+interface SetEditCountry {
+  type: ActionType.SET_EDIT_COUNTRY;
+  payload: { countryId: number };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -349,4 +367,8 @@ export type Action =
   | GetAllCountriesError
   | DeleteCountryBegin
   | DeleteCountrySuccess
-  | DeleteCountryError;
+  | DeleteCountryError
+  | EditCountryBegin
+  | EditCountrySuccess
+  | EditCountryError
+  | SetEditCountry;

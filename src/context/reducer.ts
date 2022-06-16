@@ -24,7 +24,7 @@ interface ReducerState {
   isEditingEmployee: boolean;
   employeeEditId: number | null | undefined;
   seniority: string | null;
-  country: string | null;
+  country: string | undefined;
   city: string | undefined;
   role: string | null;
   project: string | undefined;
@@ -42,7 +42,7 @@ interface ReducerState {
   }[];
   cityEditId: null | number | undefined;
   isEditingCountry: boolean;
-  countryEditId: number | null;
+  countryEditId: number | null | undefined;
   countries: {
     id: number;
     name: string;
@@ -433,6 +433,37 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertType: 'danger',
       };
     case ActionType.DELETE_COUNTRY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
+    case ActionType.SET_EDIT_COUNTRY:
+      const editingCountry = state.countries.find(
+        (country) => country.id === action.payload.countryId
+      );
+      return {
+        ...state,
+        countryEditId: editingCountry?.id,
+        country: editingCountry?.name,
+        isEditingCountry: true,
+      };
+    case ActionType.EDIT_COUNTRY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.EDIT_COUNTRY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Country was Updated Successfullly!',
+        alertType: 'success',
+      };
+    case ActionType.EDIT_COUNTRY_ERROR:
       return {
         ...state,
         loading: false,

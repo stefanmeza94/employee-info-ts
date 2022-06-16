@@ -382,6 +382,26 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     clearAlert();
   };
 
+  const setEditCountry = (id: number) => {
+    dispatch({ type: ActionType.SET_EDIT_COUNTRY, payload: { countryId: id } });
+    scrollToTop();
+  };
+
+  const editCountry = async () => {
+    dispatch({ type: ActionType.EDIT_COUNTRY_BEGIN });
+    try {
+      await axiosInstance.put(`/api/countries/${state.countryEditId}`, {
+        name: state.country,
+      });
+      dispatch({ type: ActionType.EDIT_COUNTRY_SUCCESS });
+      getAllCountries();
+      clearEditCategory('isEditingCountry', 'country');
+    } catch (error: any) {
+      dispatch({ type: ActionType.EDIT_COUNTRY_ERROR, payload: { msg: error.message } });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -414,6 +434,8 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         addNewCountry,
         getAllCountries,
         deleteCountry,
+        editCountry,
+        setEditCountry,
       }}
     >
       {children}

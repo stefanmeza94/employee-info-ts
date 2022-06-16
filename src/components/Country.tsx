@@ -7,7 +7,7 @@ interface CountryProps {
 }
 
 const City: React.FC<CountryProps> = ({ name, id }) => {
-  const { deleteCountry } = useAppContext();
+  const { deleteCountry, setEditCountry } = useAppContext();
 
   return (
     <Wrapper>
@@ -22,7 +22,9 @@ const City: React.FC<CountryProps> = ({ name, id }) => {
         <div className='content-center'>some more info</div>
         <footer>
           <div className='actions'>
-            <button className='btn edit-btn'>Edit</button>
+            <button className='btn edit-btn' onClick={() => setEditCountry(id)}>
+              Edit
+            </button>
             <button
               type='button'
               className='btn delete-btn'
