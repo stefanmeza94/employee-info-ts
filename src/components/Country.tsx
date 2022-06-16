@@ -4,11 +4,10 @@ import { useAppContext } from '../context/appContext';
 interface CountryProps {
   name: string;
   id: number;
-  countryId: number;
 }
 
-const City: React.FC<CountryProps> = ({ name, id, countryId }) => {
-  const { deleteCity, setEditCity } = useAppContext();
+const City: React.FC<CountryProps> = ({ name, id }) => {
+  const { deleteCountry } = useAppContext();
 
   return (
     <Wrapper>
@@ -24,7 +23,11 @@ const City: React.FC<CountryProps> = ({ name, id, countryId }) => {
         <footer>
           <div className='actions'>
             <button className='btn edit-btn'>Edit</button>
-            <button type='button' className='btn delete-btn'>
+            <button
+              type='button'
+              className='btn delete-btn'
+              onClick={() => deleteCountry(id)}
+            >
               Delete
             </button>
           </div>

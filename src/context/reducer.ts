@@ -43,7 +43,10 @@ interface ReducerState {
   cityEditId: null | number | undefined;
   isEditingCountry: boolean;
   countryEditId: number | null;
-  countries: any;
+  countries: {
+    id: number;
+    name: string;
+  }[];
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -415,6 +418,27 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         showAlert: true,
         alertType: 'danger',
         alertText: action.payload.msg,
+      };
+    case ActionType.DELETE_COUNTRY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.DELETE_COUNTRY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Country was Deleted Successfully!',
+        alertType: 'danger',
+      };
+    case ActionType.DELETE_COUNTRY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
       };
     default:
       return state;

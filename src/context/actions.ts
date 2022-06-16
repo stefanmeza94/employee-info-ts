@@ -277,6 +277,19 @@ interface GetAllCountriesError {
   payload: { msg: string };
 }
 
+interface DeleteCountryBegin {
+  type: ActionType.DELETE_COUNTRY_BEGIN;
+}
+
+interface DeleteCountrySuccess {
+  type: ActionType.DELETE_COUNTRY_SUCCESS;
+}
+
+interface DeleteCountryError {
+  type: ActionType.DELETE_COUNTRY_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -333,4 +346,7 @@ export type Action =
   | CreateCountryError
   | GetAllCountriesBegin
   | GetAllCountriesSuccess
-  | GetAllCountriesError;
+  | GetAllCountriesError
+  | DeleteCountryBegin
+  | DeleteCountrySuccess
+  | DeleteCountryError;

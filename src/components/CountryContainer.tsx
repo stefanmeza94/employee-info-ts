@@ -32,7 +32,6 @@ const CountryContainer = () => {
       <h5>{`${countries.length} cities Found`}</h5>
       <div className='jobs'>
         {countries.map((country: any) => {
-          console.log(country);
           return <Country key={country.id} {...country} />;
         })}
       </div>

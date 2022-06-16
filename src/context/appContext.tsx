@@ -367,6 +367,21 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   };
 
+  const deleteCountry = async (id: number) => {
+    dispatch({ type: ActionType.DELETE_COUNTRY_BEGIN });
+    try {
+      await axiosInstance.delete(`api/countries/${id}`);
+      dispatch({ type: ActionType.DELETE_COUNTRY_SUCCESS });
+      getAllCountries();
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.DELETE_COUNTRY_ERROR,
+        payload: { msg: error.message },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -398,6 +413,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         editCity,
         addNewCountry,
         getAllCountries,
+        deleteCountry,
       }}
     >
       {children}
