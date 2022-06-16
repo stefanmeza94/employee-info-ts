@@ -256,6 +256,27 @@ interface CreateCountryError {
   payload: { msg: string };
 }
 
+interface GetAllCountriesBegin {
+  type: ActionType.GET_ALL_COUNTRIES_BEGIN;
+}
+
+interface GetAllCountriesSuccess {
+  type: ActionType.GET_ALL_COUNTRIES_SUCCESS;
+  payload: {
+    id: number;
+    name: string;
+    cities: {
+      id: number;
+      name: string;
+    }[];
+  }[];
+}
+
+interface GetAllCountriesError {
+  type: ActionType.GET_ALL_COUNTRIES_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -309,4 +330,7 @@ export type Action =
   | EditCityError
   | CreateCountryBegin
   | CreateCountrySuccess
-  | CreateCountryError;
+  | CreateCountryError
+  | GetAllCountriesBegin
+  | GetAllCountriesSuccess
+  | GetAllCountriesError;

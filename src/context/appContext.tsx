@@ -347,8 +347,23 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         name: state.country,
       });
       dispatch({ type: ActionType.CREATE_COUNTRY_SUCCESS });
+      getAllCountries();
     } catch (error: any) {
       dispatch({ type: ActionType.CREATE_COUNTRY_ERROR, payload: { msg: error.msg } });
+    }
+    clearAlert();
+  };
+
+  const getAllCountries = async () => {
+    dispatch({ type: ActionType.GET_ALL_COUNTRIES_BEGIN });
+    try {
+      const { data } = await axiosInstance('api/countries');
+      dispatch({ type: ActionType.GET_ALL_COUNTRIES_SUCCESS, payload: data });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.GET_ALL_COUNTRIES_ERROR,
+        payload: { msg: error.message },
+      });
     }
   };
 
@@ -382,6 +397,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setEditCity,
         editCity,
         addNewCountry,
+        getAllCountries,
       }}
     >
       {children}

@@ -376,6 +376,46 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertText: action.payload.msg,
         alertType: 'danger',
       };
+    case ActionType.CREATE_COUNTRY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.CREATE_COUNTRY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'New Country Created Successfully!',
+        alertType: 'success',
+      };
+    case ActionType.CREATE_COUNTRY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
+    case ActionType.GET_ALL_COUNTRIES_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.GET_ALL_COUNTRIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        countries: action.payload,
+      };
+    case ActionType.GET_ALL_COUNTRIES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertType: 'danger',
+        alertText: action.payload.msg,
+      };
     default:
       return state;
   }
