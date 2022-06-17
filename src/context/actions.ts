@@ -308,6 +308,19 @@ interface SetEditCountry {
   payload: { countryId: number };
 }
 
+interface CreateTechnologyBegin {
+  type: ActionType.CREATE_TECHNOLOGY_BEGIN;
+}
+
+interface CreateTechnologySuccess {
+  type: ActionType.CREATE_TECHNOLOGY_SUCCESS;
+}
+
+interface CreateTechnologyError {
+  type: ActionType.CREATE_TECHNOLOGY_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -371,4 +384,7 @@ export type Action =
   | EditCountryBegin
   | EditCountrySuccess
   | EditCountryError
-  | SetEditCountry;
+  | SetEditCountry
+  | CreateTechnologyBegin
+  | CreateTechnologySuccess
+  | CreateTechnologyError;

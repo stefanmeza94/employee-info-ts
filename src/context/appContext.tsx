@@ -38,6 +38,10 @@ export const initialState = {
   isEditingCountry: false,
   countries: [],
   countryEditId: null,
+  technology: '',
+  technologies: [],
+  technologyEditId: null,
+  isEditingTechnology: false,
 };
 
 const AppContext = createContext<any>(initialState);
@@ -402,6 +406,26 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     clearAlert();
   };
 
+  const addNewTechnology = async () => {
+    dispatch({ type: ActionType.CREATE_TECHNOLOGY_BEGIN });
+    try {
+      await axiosInstance.post('/api/technologies', {
+        name: state.technology,
+      });
+      dispatch({ type: ActionType.CREATE_TECHNOLOGY_SUCCESS });
+    } catch (error: any) {
+      console.log(error);
+      dispatch({
+        type: ActionType.CREATE_TECHNOLOGY_ERROR,
+        payload: {
+          msg:
+            error.response.data.arrayError[0].message + '. Please Choose Different Name!',
+        },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -436,6 +460,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         deleteCountry,
         editCountry,
         setEditCountry,
+        addNewTechnology,
       }}
     >
       {children}

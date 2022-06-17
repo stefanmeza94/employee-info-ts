@@ -45,8 +45,8 @@ const adminLinks = [
   },
   {
     id: 6,
-    text: 'positions',
-    path: 'positions',
+    text: 'technologies',
+    path: 'technologies',
     icon: <BiCode />,
   },
   {

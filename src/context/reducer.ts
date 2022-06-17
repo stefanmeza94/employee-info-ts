@@ -47,6 +47,10 @@ interface ReducerState {
     id: number;
     name: string;
   }[];
+  technology: string | undefined;
+  technologies: any[];
+  technologyEditId: number | undefined | null;
+  isEditingTechnology: boolean;
 }
 
 const reducer = (state: ReducerState = initialState, action: Action): ReducerState => {
@@ -464,6 +468,27 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertType: 'success',
       };
     case ActionType.EDIT_COUNTRY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
+    case ActionType.CREATE_TECHNOLOGY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.CREATE_TECHNOLOGY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'New Technology Created Successfully!',
+        alertType: 'success',
+      };
+    case ActionType.CREATE_TECHNOLOGY_ERROR:
       return {
         ...state,
         loading: false,
