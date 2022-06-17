@@ -515,6 +515,27 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertText: action.payload.msg,
         alertType: 'danger',
       };
+    case ActionType.DELETE_TECHNOLOGY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.DELETE_TECHNOLOGY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Technology Was Deleted Successfully!',
+        alertType: 'danger',
+      };
+    case ActionType.DELETE_TECHNOLOGY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
     default:
       return state;
   }

@@ -338,6 +338,19 @@ interface GetAllTechnologiesError {
   payload: { msg: string };
 }
 
+interface DeleteTechnologyBegin {
+  type: ActionType.DELETE_TECHNOLOGY_BEGIN;
+}
+
+interface DeleteTechnologySuccess {
+  type: ActionType.DELETE_TECHNOLOGY_SUCCESS;
+}
+
+interface DeleteTechnologyError {
+  type: ActionType.DELETE_TECHNOLOGY_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -407,4 +420,7 @@ export type Action =
   | CreateTechnologyError
   | GetAllTechnologiesBegin
   | GetAllTechnologiesSuccess
-  | GetAllTechnologiesError;
+  | GetAllTechnologiesError
+  | DeleteTechnologyBegin
+  | DeleteTechnologySuccess
+  | DeleteTechnologyError;

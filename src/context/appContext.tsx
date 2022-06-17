@@ -438,6 +438,22 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         payload: { msg: error.message },
       });
     }
+    clearAlert();
+  };
+
+  const deleteTechnology = async (id: number) => {
+    dispatch({ type: ActionType.DELETE_TECHNOLOGY_BEGIN });
+    try {
+      await axiosInstance.delete(`/api/technologies/${id}`);
+      dispatch({ type: ActionType.DELETE_TECHNOLOGY_SUCCESS });
+      getAllTechnologies();
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.DELETE_TECHNOLOGY_ERROR,
+        payload: { msg: error.message },
+      });
+    }
+    clearAlert();
   };
 
   return (
@@ -476,6 +492,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setEditCountry,
         addNewTechnology,
         getAllTechnologies,
+        deleteTechnology,
       }}
     >
       {children}
