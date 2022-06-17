@@ -456,6 +456,29 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     clearAlert();
   };
 
+  const setEditTechnology = (id: number) => {
+    dispatch({ type: ActionType.SET_EDIT_TECHNOLOGY, payload: { technologyId: id } });
+    scrollToTop();
+  };
+
+  const editTechnology = async () => {
+    dispatch({ type: ActionType.EDIT_TECHNOLOGY_BEGIN });
+    try {
+      await axiosInstance.put(`/api/technologies/${state.technologyEditId}`, {
+        name: state.technology,
+      });
+      dispatch({ type: ActionType.EDIT_TECHNOLOGY_SUCCESS });
+      clearEditCategory('isEditingTechnology', 'technology');
+      getAllTechnologies();
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.EDIT_TECHNOLOGY_ERROR,
+        payload: { msg: error.message },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -493,6 +516,8 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         addNewTechnology,
         getAllTechnologies,
         deleteTechnology,
+        setEditTechnology,
+        editTechnology,
       }}
     >
       {children}

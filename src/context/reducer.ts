@@ -536,6 +536,37 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertText: action.payload.msg,
         alertType: 'danger',
       };
+    case ActionType.SET_EDIT_TECHNOLOGY:
+      const editingTechnology = state.technologies.find(
+        (technology) => technology.id === action.payload.technologyId
+      );
+      return {
+        ...state,
+        technologyEditId: editingTechnology?.id,
+        isEditingTechnology: true,
+        technology: editingTechnology?.name,
+      };
+    case ActionType.EDIT_TECHNOLOGY_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.EDIT_TECHNOLOGY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: 'Technology Updated Successfully!',
+        alertType: 'success',
+      };
+    case ActionType.EDIT_TECHNOLOGY_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
     default:
       return state;
   }

@@ -351,6 +351,24 @@ interface DeleteTechnologyError {
   payload: { msg: string };
 }
 
+interface SetEditTechnology {
+  type: ActionType.SET_EDIT_TECHNOLOGY;
+  payload: { technologyId: number };
+}
+
+interface EditTechnologyBegin {
+  type: ActionType.EDIT_TECHNOLOGY_BEGIN;
+}
+
+interface EditTechnologySuccess {
+  type: ActionType.EDIT_TECHNOLOGY_SUCCESS;
+}
+
+interface EditTechnologyError {
+  type: ActionType.EDIT_TECHNOLOGY_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -423,4 +441,8 @@ export type Action =
   | GetAllTechnologiesError
   | DeleteTechnologyBegin
   | DeleteTechnologySuccess
-  | DeleteTechnologyError;
+  | DeleteTechnologyError
+  | SetEditTechnology
+  | EditTechnologyBegin
+  | EditTechnologySuccess
+  | EditTechnologyError;

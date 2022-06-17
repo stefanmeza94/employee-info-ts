@@ -22,7 +22,9 @@ const Technology: React.FC<TechnologyProps> = ({ id, name }) => {
         <div className='content-center'>some more info</div>
         <footer>
           <div className='actions'>
-            <button className='btn edit-btn'>Edit</button>
+            <button className='btn edit-btn' onClick={() => setEditTechnology(id)}>
+              Edit
+            </button>
             <button
               type='button'
               className='btn delete-btn'
