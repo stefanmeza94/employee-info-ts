@@ -8,8 +8,7 @@ const TechnologiesContainer = () => {
   const { getAllTechnologies, technologies, loading } = useAppContext();
 
   useEffect(() => {
-    console.log('TechnologiesContainer se ucitala');
-    // getAllTechnologies()
+    getAllTechnologies();
   }, []);
 
   if (loading) {
@@ -30,7 +29,7 @@ const TechnologiesContainer = () => {
 
   return (
     <Wrapper>
-      <h5>{`${technologies.length} Projects Found`}</h5>
+      <h5>{`${technologies.length} Technologies Found`}</h5>
       <div className='jobs'>
         {technologies.map((technology: any) => {
           return <Technology key={technology.id} {...technology} />;

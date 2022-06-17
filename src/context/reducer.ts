@@ -496,6 +496,25 @@ const reducer = (state: ReducerState = initialState, action: Action): ReducerSta
         alertText: action.payload.msg,
         alertType: 'danger',
       };
+    case ActionType.GET_ALL_TECHNOLOGIES_BEGIN:
+      return {
+        ...state,
+        loading: true,
+      };
+    case ActionType.GET_ALL_TECHNOLOGIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        technologies: action.payload,
+      };
+    case ActionType.GET_ALL_TECHNOLOGIES_ERROR:
+      return {
+        ...state,
+        loading: false,
+        showAlert: true,
+        alertText: action.payload.msg,
+        alertType: 'danger',
+      };
     default:
       return state;
   }

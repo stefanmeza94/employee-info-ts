@@ -413,6 +413,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         name: state.technology,
       });
       dispatch({ type: ActionType.CREATE_TECHNOLOGY_SUCCESS });
+      getAllTechnologies();
     } catch (error: any) {
       console.log(error);
       dispatch({
@@ -424,6 +425,19 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       });
     }
     clearAlert();
+  };
+
+  const getAllTechnologies = async () => {
+    dispatch({ type: ActionType.GET_ALL_TECHNOLOGIES_BEGIN });
+    try {
+      const { data } = await axiosInstance('/api/technologies');
+      dispatch({ type: ActionType.GET_ALL_TECHNOLOGIES_SUCCESS, payload: data });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.GET_ALL_TECHNOLOGIES_ERROR,
+        payload: { msg: error.message },
+      });
+    }
   };
 
   return (
@@ -461,6 +475,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         editCountry,
         setEditCountry,
         addNewTechnology,
+        getAllTechnologies,
       }}
     >
       {children}

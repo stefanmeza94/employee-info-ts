@@ -321,6 +321,23 @@ interface CreateTechnologyError {
   payload: { msg: string };
 }
 
+interface GetAllTechnologiesBegin {
+  type: ActionType.GET_ALL_TECHNOLOGIES_BEGIN;
+}
+
+interface GetAllTechnologiesSuccess {
+  type: ActionType.GET_ALL_TECHNOLOGIES_SUCCESS;
+  payload: {
+    id: number;
+    name: string;
+  }[];
+}
+
+interface GetAllTechnologiesError {
+  type: ActionType.GET_ALL_TECHNOLOGIES_ERROR;
+  payload: { msg: string };
+}
+
 export type Action =
   | ToggleSidebar
   | LoginSuccess
@@ -387,4 +404,7 @@ export type Action =
   | SetEditCountry
   | CreateTechnologyBegin
   | CreateTechnologySuccess
-  | CreateTechnologyError;
+  | CreateTechnologyError
+  | GetAllTechnologiesBegin
+  | GetAllTechnologiesSuccess
+  | GetAllTechnologiesError;
