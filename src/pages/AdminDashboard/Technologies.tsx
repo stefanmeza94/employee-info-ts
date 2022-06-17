@@ -1,5 +1,6 @@
 import { useAppContext } from '../../context/appContext';
 import AddForm from '../../components/AddForm';
+import TechnologiesContainer from '../../components/TechnologiesContainer';
 
 const Technologies = () => {
   const { technology, addNewTechnology, editTechnology, isEditingTechnology } =
@@ -14,6 +15,7 @@ const Technologies = () => {
         editFunc={editTechnology}
         editing={isEditingTechnology}
       />
+      <TechnologiesContainer />
     </>
   );
 };
