@@ -481,7 +481,6 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const RemoveFromProjectManager = async (id: number) => {
     const removingUser = state.employees.find((employee: any) => employee.id === id);
-    console.log(removingUser);
     try {
       await axiosInstance.put(`/api/users/${id}`, {
         name: removingUser?.name,
@@ -490,6 +489,27 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         seniority: removingUser?.seniority?.toLowerCase(),
       });
       getAllEmployees();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const RemoveFromSystemAdmin = async (id: number) => {
+    const removingUser = state.employees.find((employee: any) => employee.id === id);
+    try {
+      await axiosInstance.put(`/api/users/${id}`, {
+        name: removingUser?.name,
+        email: removingUser?.email,
+        role: 'employee',
+        seniority: removingUser?.seniority?.toLowerCase(),
+      });
+
+      if (removingUser?.id === state.user.id) {
+        handleLogout();
+        return;
+      } else {
+        getAllEmployees();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -535,6 +555,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setEditTechnology,
         editTechnology,
         RemoveFromProjectManager,
+        RemoveFromSystemAdmin,
       }}
     >
       {children}

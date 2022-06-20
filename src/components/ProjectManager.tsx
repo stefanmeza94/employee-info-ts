@@ -1,12 +1,12 @@
 import Wrapper from '../assets/Wrappers/Employee';
 import { useAppContext } from '../context/appContext';
 
-interface ProjectProps {
+interface ProjectManagerProps {
   name: string;
   id: number;
 }
 
-const Project: React.FC<ProjectProps> = ({ name, id }) => {
+const ProjectManager: React.FC<ProjectManagerProps> = ({ name, id }) => {
   const { RemoveFromProjectManager } = useAppContext();
   return (
     <Wrapper>
@@ -35,4 +35,4 @@ const Project: React.FC<ProjectProps> = ({ name, id }) => {
   );
 };
 
-export default Project;
+export default ProjectManager;

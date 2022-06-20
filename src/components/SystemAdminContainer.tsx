@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
-import ProjectManager from '../components/ProjectManager';
+import SystemAdmins from '../components/SystemAdmins';
 import Wrapper from '../assets/Wrappers/EmployeeContainer';
 import Loading from './Loading';
 
-const ProjectManagerContainer = () => {
+const SystemAdminContainer = () => {
   const { getAllEmployees, employees, loading } = useAppContext();
 
   useEffect(() => {
@@ -22,17 +22,17 @@ const ProjectManagerContainer = () => {
   return (
     <Wrapper>
       <h5>{`${
-        employees.filter((employee: any) => employee.role === 'PROJECT_MANAGER').length
-      } Project Managers Found`}</h5>
+        employees.filter((employee: any) => employee.role === 'SYSTEM_ADMIN').length
+      } System Admins Found`}</h5>
       <div className='jobs'>
         {employees
-          .filter((employee: any) => employee.role === 'PROJECT_MANAGER')
+          .filter((employee: any) => employee.role === 'SYSTEM_ADMIN')
           .map((employee: any) => {
-            return <ProjectManager key={employee.id} {...employee} />;
+            return <SystemAdmins key={employee.id} {...employee} />;
           })}
       </div>
     </Wrapper>
   );
 };
 
-export default ProjectManagerContainer;
+export default SystemAdminContainer;
