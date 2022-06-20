@@ -39,24 +39,18 @@ const adminLinks = [
   },
   {
     id: 5,
-    text: 'seniorities',
-    path: 'seniorities',
-    icon: <MdCategory />,
-  },
-  {
-    id: 6,
     text: 'technologies',
     path: 'technologies',
     icon: <BiCode />,
   },
   {
-    id: 7,
+    id: 6,
     text: 'Project Managers',
     path: 'project-managers',
     icon: <MdOutlinePeopleOutline />,
   },
   {
-    id: 8,
+    id: 7,
     text: 'System Administrators',
     path: 'system-administrators',
     icon: <BsFillPeopleFill />,

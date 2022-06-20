@@ -479,6 +479,22 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     clearAlert();
   };
 
+  const RemoveFromProjectManager = async (id: number) => {
+    const removingUser = state.employees.find((employee: any) => employee.id === id);
+    console.log(removingUser);
+    try {
+      await axiosInstance.put(`/api/users/${id}`, {
+        name: removingUser?.name,
+        email: removingUser?.email,
+        role: 'employee',
+        seniority: removingUser?.seniority?.toLowerCase(),
+      });
+      getAllEmployees();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -518,6 +534,7 @@ const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         deleteTechnology,
         setEditTechnology,
         editTechnology,
+        RemoveFromProjectManager,
       }}
     >
       {children}

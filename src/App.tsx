@@ -8,7 +8,6 @@ import AllProjects from './pages/AdminDashboard/AllProjects';
 import Cities from './pages/AdminDashboard/Cities';
 import Countries from './pages/AdminDashboard/Countries';
 import Technologies from './pages/AdminDashboard/Technologies';
-import Seniorities from './pages/AdminDashboard/Seniorities';
 import ProjectManagers from './pages/AdminDashboard/ProjectsManagers';
 import SystemAdministrators from './pages/AdminDashboard/SystemAdministrators';
 
@@ -40,7 +39,6 @@ function App() {
           <Route path='all-projects' element={<AllProjects />} />
           <Route path='cities' element={<Cities />} />
           <Route path='countries' element={<Countries />} />
-          <Route path='seniorities' element={<Seniorities />} />
           <Route path='technologies' element={<Technologies />} />
           <Route path='project-managers' element={<ProjectManagers />} />
           <Route path='system-administrators' element={<SystemAdministrators />} />
